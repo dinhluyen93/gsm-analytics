@@ -240,7 +240,7 @@
                 </div>
             </div>
         </div>
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion here show">
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion ">
             <span class="menu-link">
                 <span class="menu-icon">
                 <i class="ki-duotone ki-delivery fs-1">
@@ -255,7 +255,7 @@
             </span>
             <div class="menu-sub menu-sub-accordion">
                 <div class="menu-item">
-                    <a class="menu-link active" href="/eleventy-base-blog/trips/"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Lịch Sử</span></a>
+                    <a class="menu-link " href="/eleventy-base-blog/trips/"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Lịch Sử</span></a>
                 </div>
             </div>
         </div>
@@ -303,7 +303,7 @@
                 </div>
             </div>
         </div>
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion ">
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion here show">
             <span class="menu-link">
             <span class="menu-icon">
             <i class="ki-duotone ki-user fs-1">
@@ -315,7 +315,7 @@
             </span>
             <div class="menu-sub menu-sub-accordion">
                 <div class="menu-item">
-                    <a class="menu-link " href="/eleventy-base-blog/account/settings/"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Cài Đặt</span></a>
+                    <a class="menu-link active" href="/eleventy-base-blog/account/settings/"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Cài Đặt</span></a>
                 </div>
             </div>
         </div>
@@ -336,193 +336,149 @@
                         <!--begin::Content -->
 <div id="kt_app_content" class="app-content flex-column-fluid">
     <div id="kt_app_content_container" class="app-container container-fluid">
-        <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6 mb-5 mb-xl-10">
-            <i class="ki-duotone ki-information fs-2tx text-primary me-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>        
-            <div class="d-flex flex-stack flex-grow-1 ">
-                <div class=" fw-semibold">
-                    <h4 class="text-gray-900 fw-bold">Tính năng mới</h4>
-                    <div class="fs-6 text-gray-700 ">Bạn có thể thêm dữ liệu từ 2 tệp trước đó, dữ liệu sẽ được gộp lại thành dữ liệu duy nhất.</div>
-                </div>
-            </div>
-        </div>
-        <!--begin::Selection-->
         <div class="card mb-5 mb-xl-10">
-            <!--begin::Card Header-->
-            <div class="card-header border-0 pt-6">
-                <div class="card-title">
-                    <div class="d-flex align-items-center position-relative my-1">
-                        <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span class="path2"></span></i>
-                        <input type="text" data-kt-trip-table-filter="search" class="form-control form-control-solid w-200px ps-13" placeholder="Tìm...">
-                    </div>
-                </div>
-                <div class="card-toolbar">
-                    <div class="d-flex justify-content-end" data-kt-trip-table-toolbar="base">
-                        <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#trips_import_modal">
-                        <i class="ki-duotone ki-exit-up fs-2"><span class="path1"></span><span class="path2"></span></i>
-                        Nhập
-                        </button>
-                        <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#trips_export_modal">
-                        <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
-                        Lưu
-                        </button>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#trips_add_trip_modal">Thêm Chuyến</button>
-                    </div>
-                    <div class="d-flex justify-content-end align-items-center d-none" data-kt-trip-table-toolbar="selected">
-                        <div class="fw-bold me-5">
-                            <span class="me-2" data-kt-trip-table-select="selected_count"></span> Đã Chọn
+            <div class="card-body pt-9 pb-0">
+                <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+                    <div class="me-7 mb-4">
+                        <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+                            <span class="symbol-label bg-warning text-inverse-warning fw-bold fs-1"><span id="user_avatar">Ẩn Danh</span></span>
+                            <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                         </div>
-                        <button type="button" class="btn btn-danger" data-kt-trip-table-select="delete_selected">Xóa Lựa Chọn</button>
                     </div>
-                </div>
-            </div>
-            <!--begin::Card Body-->
-            <div class="card-body pt-0">
-                <div id="dl_trips_table_wrapper">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5 " id="dl_trips_table">
-                        <thead>
-                            <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1">
-                                    <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                        <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#dl_trips_table .form-check-input" value="1">
-                                    </div>
-                                </th>
-                                <th class="min-w-125px sorting" tabindex="0" aria-controls="dl_trips_table" rowspan="1" colspan="1">Ngày Tháng</th>
-                                <th class="min-w-125px sorting" tabindex="0" aria-controls="dl_trips_table" rowspan="1" colspan="1">Thời Gian</th>
-                                <th class="min-w-125px sorting" tabindex="0" aria-controls="dl_trips_table" rowspan="1" colspan="1">Dịch Vụ</th>
-                                <th class="min-w-125px sorting" tabindex="0" aria-controls="dl_trips_table" rowspan="1" colspan="1">Giá Cước</th>
-                                <th class="min-w-125px sorting" tabindex="0" aria-controls="dl_trips_table" rowspan="1" colspan="1">Quãng Đường</th>
-                                <th class="text-end min-w-125px sorting_disabled" rowspan="1" colspan="1">Hành Động</th>
-                            </tr>
-                        </thead>
-                        <tbody class="fw-semibold text-gray-600" id="dl_trips_tbody"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!--begin::Modal-->
-        <div class="modal fade" id="trips_add_trip_modal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered mw-650px">
-                <div class="modal-content">
-                    <form class="form fv-plugins-bootstrap5 fv-plugins-framework" id="addDataForm">
-                        <div class="modal-header" id="trips_add_trip_modal_header">
-                            <h2 class="fw-bold">Thêm một Chuyến Xe</h2>
-                            <!--begin::Close-->
-                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                                <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                            <div class="d-flex flex-column">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Đối Tác <span id="user_fullname"></span></span>
+                                    <i class="ki-duotone ki-verify fs-1 text-primary"><span class="path1"></span><span class="path2"></span></i>
+                                </div>
+                                <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
+                                    <span href="#" class="d-flex align-items-center text-gray-500 text-hover-primary me-5 mb-2">
+                                    <i class="ki-duotone ki-geolocation fs-4 me-1"><span class="path1"></span><span class="path2"></span></i><span id="user_city">Hà Nội</span>
+                                    </span>
+                                    <span href="#" class="d-flex align-items-center text-gray-500 text-hover-primary me-5 mb-2">
+                                    <i class="ki-duotone ki-profile-circle fs-4 me-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i><span id="user_ambassador">5h</span>
+                                    </span>
+                                </div>
                             </div>
-                            <!--end::Close-->
                         </div>
-                        <div class="modal-body py-10 px-lg-17">
-                            <div class="scroll-y me-n7 pe-7" id="trips_add_trip_modal_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#trips_add_trip_modal_header" data-kt-scroll-wrappers="#trips_add_trip_modal_scroll" data-kt-scroll-offset="300px">
-                                <div class="fv-row mb-7 fv-plugins-icon-container">
-                                    <label class="required fs-6 fw-semibold mb-2">Chọn Ngày</label>
-                                    <input type="date" id="addDate" class="form-control form-control-solid" required="">
-                                </div>
-                                <div class="fv-row mb-7 fv-plugins-icon-container">
-                                    <label class="required fs-6 fw-semibold mb-2">Trực Tuyến</label>
-                                    <input type="text" id="addOnline" class="form-control form-control-solid" value="8:00" required="">
-                                </div>
-                                <div class="fv-row mb-7 fv-plugins-icon-container">
-                                    <label class="required fs-6 fw-semibold mb-2">Văn Bản</label>
-                                    <textarea id="addText" class="form-control form-control-solid" required=""></textarea>
-                                    <div class="form-text">
-                                        Bước 1: Chụp ảnh lịch sử bao gồm Giá, Thời gian, Dịch Vụ
+                        <div class="d-flex flex-wrap flex-stack">
+                            <div class="d-flex flex-column flex-grow-1 pe-8">
+                                <div class="d-flex flex-wrap">
+                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <i class="ki-duotone ki-arrow-up fs-2 text-success me-2"><span class="path1"></span><span class="path2"></span></i>                                    
+                                            <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="4500" data-kt-countup-prefix="$" data-kt-initialized="1">$4,500</div>
+                                        </div>
+                                        <div class="fw-semibold fs-6 text-gray-500">Thu nhập / năm</div>
                                     </div>
-                                    <div class="form-text">
-                                        Bước 2: Chuyển đổi hình ảnh thành văn bản <a href="https://www.imagetotext.info/vi/image-to-text" target="_blank">tại đây</a>
-                                    </div>
-                                    <div class="form-text">
-                                        Bước 3: Dán văn bản vào khung Văn Bản và ấn Thêm chuyến
+                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <i class="ki-duotone ki-arrow-down fs-2 text-danger me-2"><span class="path1"></span><span class="path2"></span></i>                                    
+                                            <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="75" data-kt-initialized="1">75</div>
+                                        </div>
+                                        <div class="fw-semibold fs-6 text-gray-500">Chuyến xe / năm</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer flex-center">
-                            <button type="reset" class="btn btn-light btn-active-light-primary me-2" data-bs-dismiss="modal">Hủy Bỏ</button>
-                            <button type="submit" class="btn btn-primary" id="dl_docs_toast_stack_button" data-bs-dismiss="modal">Thêm Chuyến</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!--begin::Modal-->
-        <div class="modal fade" id="trips_import_modal" tabindex="-1" aria-modal="true">
-            <div class="modal-dialog modal-dialog-centered mw-650px">
-                <div class="modal-content">
-                    <form class="form form-group" id="formAddDataFile">
-                        <div class="modal-header">
-                            <h2 class="fw-bold">Tải Tệp Tin</h2>
-                            <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
-                                <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>                    
-                            </div>
-                        </div>
-                        <div class="modal-body pt-10 pb-15 px-lg-17">
-                            <div class="mb-5">
-                                <input type="file" id="formFileInput" class="form-control form-control-solid" accept="application/json">
-                            </div>
-                            <div class="mb-5">
-                                <button type="submit" id="formFileSubmit" class="btn btn-primary" data-bs-dismiss="modal">Nhập Dữ Liệu</button>
-                            </div>
-                            <div><span class="form-text fs-6 text-muted">Định dạng dữ liệu có thể bị sửa đổi theo phiên bản. Bạn cần định dạng lại tại đây.</span></div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!--begin::Modal-->
-        <div class="modal fade" id="trips_export_modal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered mw-650px">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="fw-bold">Xuất Dữ Liệu Chuyến Xe</h2>
-                        <div id="dl_trips_export_close" class="btn btn-icon btn-sm btn-active-icon-primary">
-                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>                
-                        </div>
                     </div>
-                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                        <form id="dl_trips_export_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
-                            <div class="fv-row mb-10">
-                                <label class="fs-5 fw-semibold form-label mb-5">Định Dạng:</label>
-                                <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-hide-search="true">
-                                    <option></option>
-                                    <option value="json" selected="">Json</option>
+                </div>
+                <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                    <li class="nav-item mt-2">
+                        <span class="nav-link text-active-primary ms-0 me-10 py-5 active">
+                        Cài Đặt
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card mb-5 mb-xl-10">
+            <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                <div class="card-title m-0">
+                    <h3 class="fw-bold m-0">Hồ Sơ Tài Khoản</h3>
+                </div>
+            </div>
+            <div id="kt_account_settings_profile_details" class="collapse show">
+                <form id="kt_account_profile_details_form" class="form">
+                    <div class="card-body border-top p-9">
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Họ và Tên</label>
+                            <div class="col-lg-8 fv-row">
+                                <input type="text" name="fullname" class="form-control form-control-lg form-control-solid" placeholder="Họ và tên" value="Ẩn Danh">
+                            </div>
+                        </div>
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Cấp Đại Sứ</label>
+                            <div class="col-lg-8 fv-row">
+                                <select name="ambassador" aria-label="Lựa chọn đại sứ..." data-placeholder="Lựa chọn đại sứ..." class="form-select form-select-solid form-select-lg">
+                                    <option value="">Lựa chọn đại sứ...</option>
+                                    <option value="5h">Đại sứ 5h</option>
+                                    <option value="8h">Đại sứ 8h</option>
+                                    <option value="10h">Đại sứ 10h</option>
                                 </select>
                             </div>
-                            <div class="row fv-row mb-15">
-                                <label class="fs-5 fw-semibold form-label mb-5">Dữ Liệu:</label>
-                                <div class="d-flex flex-column">
-                                    <label class="form-check form-check-custom form-check-sm form-check-solid mb-3">
-                                    <input class="form-check-input" type="checkbox" value="1" checked="checked" name="file_type">
-                                    <span class="form-check-label text-gray-600 fw-semibold">
-                                    Tất Cả
-                                    </span>
-                                    </label>
+                        </div>
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                            <span class="required">Tỉnh/Thành Phố</span>
+                            <span class="ms-1" data-bs-toggle="tooltip" title="Thành phố đang hoạt động">
+                            <i class="ki-duotone ki-information-5 text-gray-500 fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i></span>
+                            </label>
+                            <div class="col-lg-8 fv-row">
+                                <select name="city" aria-label="Lựa chọn thành phố..." data-placeholder="Lựa chọn thành phố..." class="form-select form-select-solid form-select-lg fw-semibold">
+                                    <option value="">Lựa chọn thành phố...</option>
+                                    <option value="hanoi">Hà Nội</option>
+                                    <option value="danang">Đà Nẵng</option>
+                                    <option value="hochiminh">Hồ Chí Minh</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6">
+                            <i class="ki-duotone ki-design-1 fs-2tx text-primary me-4"></i>        
+                            <div class="d-flex flex-stack flex-grow-1 ">
+                                <div class=" fw-semibold">
+                                    <div class="fs-6 text-gray-700 ">Dữ liệu này sẽ được sử dụng trong các tính toán. Để thay đổi vui lòng quay trở lại đây để cài đặt.</div>
                                 </div>
                             </div>
-                            <div class="text-center">
-                                <button type="reset" id="dl_trips_export_cancel" class="btn btn-light me-3">
-                                Hủy Bỏ
-                                </button>
-                                <button type="submit" id="dl_trips_export_submit" class="btn btn-primary">
-                                <span class="indicator-label">
-                                Hoàn Thành
-                                </span>
-                                <span class="indicator-progress">
-                                Chờ chút... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                </span>
-                                </button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                    <div class="card-footer d-flex justify-content-end py-6 px-9">
+                        <button type="reset" class="btn btn-light btn-active-light-primary me-2">Hủy Bỏ</button>
+                        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Lưu Lại</button>
+                    </div>
+                </form>
             </div>
         </div>
-        <!--begin::Toast-->
-        <div id="toast_stack_container" class="toast-container position-fixed top-0 end-0 p-3 z-index-3">
-            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-toast="stack">
-                <div class="toast-body">
-                    Đã cập nhập dữ liệu!
+        <div class="card">
+            <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_deactivate" aria-expanded="true" aria-controls="kt_account_deactivate">
+                <div class="card-title m-0">
+                    <h3 class="fw-bold m-0">Xóa Dữ Liệu</h3>
                 </div>
+            </div>
+            <div id="kt_delete_account_data" class="collapse show">
+                <form id="kt_delete_account_data_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate">
+                    <div class="card-body border-top p-9">
+                        <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
+                            <i class="ki-duotone ki-information fs-2tx text-warning me-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>        
+                            <div class="d-flex flex-stack flex-grow-1 ">
+                                <div class=" fw-semibold">
+                                    <h4 class="text-gray-900 fw-bold">Bạn Đang Xóa Dữ Liệu Của Mình</h4>
+                                    <div class="fs-6 text-gray-700 ">Website không lưu dữ liệu của bạn. Khi xóa dữ liệu là không thể khôi phục, vui lòng cân nhắc.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-check form-check-solid fv-row fv-plugins-icon-container">
+                            <input name="deactivate" class="form-check-input" type="checkbox" value="" id="deactivate">
+                            <label class="form-check-label fw-semibold ps-2 fs-6" for="deactivate">Tôi xác nhận việc xóa dữ liệu của mình.</label>
+                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end py-6 px-9">
+                        <button id="kt_delete_account_data_submit" type="submit" class="btn btn-danger fw-semibold">Xóa Dữ Liệu</button>
+                    </div>
+                    <input type="hidden">
+                </form>
             </div>
         </div>
     </div>
@@ -1242,11 +1198,11 @@
 
     
         
-            <script src="/eleventy-base-blog/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+            <script src="/eleventy-base-blog/assets/js/custom/account/settings/profile-details.js"></script>
         
-            <script src="/eleventy-base-blog/assets/js/custom/trips/trips-list.js"></script>
+            <script src="/eleventy-base-blog/assets/js/custom/account/settings/user-overview.js"></script>
         
-            <script src="/eleventy-base-blog/assets/js/custom/trips/trips-export.js"></script>
+            <script src="/eleventy-base-blog/assets/js/custom/account/settings/clean-data.js"></script>
         
     
 </body>

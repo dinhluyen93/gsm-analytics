@@ -36,14 +36,24 @@ var KTTripsExport = function() {
                 formValidator && formValidator.validate().then(function(validationResult) {
                     console.log("validated!");
                     if (validationResult === "Valid") {
-                        var dataToExport = JSON.parse(localStorage.getItem('trips'));
+                        var dataToExport = JSON.parse(localStorage.getItem('dataTrips'));
                         var jsonData = JSON.stringify(dataToExport);
                         var blob = new Blob([jsonData], { type: 'application/json' });
                         var url = URL.createObjectURL(blob);
+                        
+                        // Lấy ngày hiện tại
+                        var currentDate = new Date();
+                        var year = currentDate.getFullYear();
+                        var month = ('0' + (currentDate.getMonth() + 1)).slice(-2); // Thêm 0 phía trước nếu tháng < 10
+                        var day = ('0' + currentDate.getDate()).slice(-2); // Thêm 0 phía trước nếu ngày < 10
+                        
+                        // Tạo chuỗi tên mới
+                        var fileName = 'gsm_datatrips_' + year + '-' + month + '-' + day + '.json';
+                        
                         var downloadLink = document.createElement('a');
                         downloadLink.style.display = 'none';
                         downloadLink.href = url;
-                        downloadLink.download = 'data_XanhSM.json';
+                        downloadLink.download = fileName; // Sử dụng tên mới
                         document.body.appendChild(downloadLink);
                         downloadLink.click();
                         setTimeout(function() {
@@ -53,6 +63,7 @@ var KTTripsExport = function() {
                         modalInstance.hide();
                         submitButton.disabled = false;
                     } else {
+                        // Xử lý trường hợp validation không hợp lệ
                         Swal.fire({
                             text: "Xin lỗi, có vẻ như đã xảy ra lỗi, vui lòng thử lại.",
                             icon: "error",
@@ -65,6 +76,7 @@ var KTTripsExport = function() {
                     }
                 });
             });
+            
 
             cancelButton.addEventListener("click", function(event) {
                 event.preventDefault();

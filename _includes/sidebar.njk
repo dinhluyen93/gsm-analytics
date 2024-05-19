@@ -11,7 +11,7 @@
         data-kt-menu="true" 
         data-kt-menu-expand="false" 
         class="flex-column-fluid menu menu-sub-indention menu-column menu-rounded menu-active-bg mb-7">
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {% if page.url == '/dashboard/' or page.url == '/trips/' or page.url == '/pin/' %}here show{% endif %}">
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {% if page.url == '/dashboard/' or page.url == '/pin/' %}here show{% endif %}">
             <span class="menu-link">
             <span class="menu-icon">
             <i class="ki-duotone ki-element-11 fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
@@ -23,13 +23,8 @@
                     <a class="menu-link {% if page.url == '/dashboard/' %}active{% endif %}" href="{{ '/dashboard/' }}"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Tổng Quan</span></a>
                 </div>
             </div>
-            <div class="menu-sub menu-sub-accordion">
-                <div  class="menu-item">
-                    <a class="menu-link {% if page.url == '/trips/' %}active{% endif %}" href="{{ '/trips/' }}"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Chuyến Xe</span></a>
-                </div>
-            </div>
         </div>
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {% if page.url == '/account/' %}here show{% endif %}">
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {% if page.url == '/trips/' %}here show{% endif %}">
             <span class="menu-link">
                 <span class="menu-icon">
                 <i class="ki-duotone ki-delivery fs-1">
@@ -44,16 +39,11 @@
             </span>
             <div class="menu-sub menu-sub-accordion">
                 <div  class="menu-item">
-                    <a class="menu-link {% if page.url == '/accounts/overvew/' %}active{% endif %}" href="{{ '/accounts/' }}"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Tổng Quan</span></a>
-                </div>
-            </div>
-            <div class="menu-sub menu-sub-accordion">
-                <div  class="menu-item">
-                    <a class="menu-link {% if page.url == '/accounts/settings/' %}active{% endif %}" href="{{ '/accounts/settings/' }}"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Thêm Chuyến Xe</span></a>
+                    <a class="menu-link {% if page.url == '/trips/' %}active{% endif %}" href="{{ '/trips/' }}"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Lịch Sử</span></a>
                 </div>
             </div>
         </div>
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {% if page.url == '/account/' %}here show{% endif %}">
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {% if page.url == '/pin/' %}here show{% endif %}">
             <span class="menu-link">
             <span class="menu-icon">
             <i class="ki-duotone ki-flash-circle fs-1">
@@ -65,16 +55,16 @@
             </span>
             <div class="menu-sub menu-sub-accordion">
                 <div  class="menu-item">
-                    <a class="menu-link {% if page.url == '/account/settings' %}active{% endif %}" href="#"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Tổng Quan</span></a>
+                    <a class="menu-link {% if page.url == '/pin/' %}active{% endif %}" href="#"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Tổng Quan</span></a>
                 </div>
             </div>
             <div class="menu-sub menu-sub-accordion">
                 <div  class="menu-item">
-                    <a class="menu-link {% if page.url == '/account/settings' %}active{% endif %}" href="#"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Ghi Chép</span></a>
+                    <a class="menu-link {% if page.url == '/pin/' %}active{% endif %}" href="#"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Lịch Sử</span></a>
                 </div>
             </div>
         </div>
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {% if page.url == '/account/' %}here show{% endif %}">
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {% if page.url == '/money/' %}here show{% endif %}">
             <span class="menu-link">
             <span class="menu-icon">
             <i class="ki-duotone ki-wallet fs-1">
@@ -88,33 +78,16 @@
             </span>
             <div class="menu-sub menu-sub-accordion">
                 <div  class="menu-item">
-                    <a class="menu-link {% if page.url == '/account/settings' %}active{% endif %}" href="#"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Tổng Quan</span></a>
+                    <a class="menu-link {% if page.url == '/money/' %}active{% endif %}" href="#"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Tổng Quan</span></a>
                 </div>
             </div>
             <div class="menu-sub menu-sub-accordion">
                 <div  class="menu-item">
-                    <a class="menu-link {% if page.url == '/account/settings' %}active{% endif %}" href="#"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Ghi Chép</span></a>
+                    <a class="menu-link {% if page.url == '/money' %}active{% endif %}" href="#"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Lịch Sử</span></a>
                 </div>
             </div>
         </div>
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion ">
-            <span class="menu-link">
-            <span class="menu-icon">
-            <i class="ki-duotone ki-some-files fs-1"><span class="path1"></span><span class="path2"></span></i>
-            </span>
-            <span class="menu-title">Blog</span><span class="menu-arrow"></span>
-            </span>
-            <div class="menu-sub menu-sub-accordion">
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Tài Khoản</span><span class="menu-arrow"></span></span>
-                    <div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;" kt-hidden-height="290">
-                        <div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Tổng Quan</span></a></div>
-                        <div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Cài Đặt</span></a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {% if page.url == '/accounts/settings/' %}here show{% endif %}">
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {% if page.url == '/account/settings/' %}here show{% endif %}">
             <span class="menu-link">
             <span class="menu-icon">
             <i class="ki-duotone ki-user fs-1">
@@ -126,7 +99,7 @@
             </span>
             <div class="menu-sub menu-sub-accordion">
                 <div  class="menu-item">
-                    <a class="menu-link {% if page.url == '/accounts/settings/' %}active{% endif %}" href="{{ '/accounts/settings/' }}"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Cài Đặt</span></a>
+                    <a class="menu-link {% if page.url == '/account/settings/' %}active{% endif %}" href="{{ '/account/settings/' }}"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Cài Đặt</span></a>
                 </div>
             </div>
         </div>

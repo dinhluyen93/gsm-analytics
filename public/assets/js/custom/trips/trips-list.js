@@ -2,41 +2,96 @@
 var KTTripsList = function() {
     var table;
 
-    function formatVND(str) {
-        let fmStr = str.toString();
-        return fmStr.split('').reverse().reduce((prev, next, index) => {
-            return ((index % 3) ? next : (next + ',')) + prev
-        })
-    }
-    function sortTripsByTime(trips) {
-        return trips.sort((a, b) => {
-            return new Date('1970/01/01 ' + a.time) - new Date('1970/01/01 ' + b.time);
+    // Định dạng dữ liệu cũ sang dữ liệu mới
+    function convertOldDataToNew(oldData) {
+        return oldData.map(function(oldItem) {
+            var newItem = {
+                "d": oldItem.date,
+                "o": oldItem.workingTime,
+                "t": oldItem.trips.map(function(trip) {
+                    return [trip.time, trip.service, trip.price];
+                })
+            };
+            return newItem;
         });
     }
+
+    // Kiểm tra dữ liệu và định dạng theo phiên bản mới nhất
+    function checkDataTripsVersion() {
+        const dataTrips = JSON.parse(localStorage.getItem('dataTrips'));
+        if (dataTrips){
+            localStorage.removeItem("trips");
+        } else {
+            const oldData = JSON.parse(localStorage.getItem('trips'));
+            if (oldData){
+                const newData = convertOldDataToNew(oldData);
+                localStorage.setItem('dataTrips', JSON.stringify(newData));
+            }
+        }
+    }
+
+    // Gộp dữ liệu tải lên và dữ liệu đã có
+    function addDataToStorage(data) {
+        const dataTrips = JSON.parse(localStorage.getItem('dataTrips'));
+        if (dataTrips){
+            data.forEach(day => {
+                addTripToLocalStorage(day.d, day.o, day.t)
+            });
+        } else {
+            localStorage.setItem('dataTrips', JSON.stringify(data));
+        }
+    }
+
+    // Kiểm tra dữ liệu tải lên và chuyển đổi
+    function checkDataUpload(data) {
+        if (!Array.isArray(data)) {
+            alert("Dữ liệu không hợp lệ. Vui lòng kiểm tra lại tệp JSON.");
+            return;
+        }
+    
+        let hasDate = false;
+        for (let i = 0; i < data.length; i++) {
+            if ("date" in data[i]) {
+                hasDate = true;
+                break;
+            }
+        }
+    
+        if (hasDate) {
+            // Dữ liệu cũ
+            const newData = convertOldDataToNew(data);
+            localStorage.removeItem("trips");
+            addDataToStorage(newData)
+        } else {
+            // Dữ liệu mới
+            addDataToStorage(data)
+        }
+    }
+
     function sortTrips(trips) {
-        return trips.map(day => {
-            day.trips = sortTripsByTime(day.trips);
-            return day;
-        });
-    }
-    function sortTripsByDate(trips) {
         return trips.sort((a, b) => {
-            sortTrips(trips)
-            return new Date(b.date) - new Date(a.date);
+            const dateA = new Date(a.d);
+            const dateB = new Date(b.d);
+            
+            if (dateA.getTime() !== dateB.getTime()) {
+                return dateB - dateA; // Sắp xếp theo ngày giảm dần
+            } else {
+                return a.trips.sort((tripA, tripB) => {
+                    const timeA = new Date('1970/01/01 ' + tripA[0]);
+                    const timeB = new Date('1970/01/01 ' + tripB[0]);
+                    return timeA - timeB; // Sắp xếp các chuyến đi trong cùng một ngày theo thời gian tăng dần
+                });
+            }
         });
     }
 
-    // Chuyển đổi văn bản thành JSON và trả về đối tượng JSON
     function convertTextToJson(text) {
-        // const lines = text.trim().split('\n').filter(line => line.trim() !== '');
         const lines = text.trim().split('\n').filter(line => line.trim() !== '' && (line.includes('.000₫') || line.includes('|')));
-        console.log(lines)
-
         const trips = [];
         let trip = {};
         let tripStarted = false;
 
-        // Hàm để kiểm tra giá tiền và chuyển đổi sang số
+        const isPriceAndTimeService = (line) => line.match(/^\d+\.?\d*₫ \d{2}:\d{2} \| .+$/);
         const isPrice = (line) => {
             const match = line.match(/^\d+\.?\d*₫$/);
             if (match) {
@@ -45,19 +100,22 @@ var KTTripsList = function() {
             return false;
         };
 
-        // Hàm để kiểm tra thời gian và dịch vụ
         const isTimeAndService = (line) => line.match(/^\d{2}:\d{2} \| .+$/);
-
-        // Hàm để kiểm tra trạng thái
-        const isStatus = (line) => ["Hoàn thành", "Hủy"].includes(line.trim());
 
         lines.forEach(line => {
             line = line.trim();
-
             const price = isPrice(line);
-            if (price) {
-                // Nếu đã có dữ liệu chuyến đi trước đó thì đẩy vào trips nếu không bị hủy
-                if (tripStarted && trip.status !== "Hủy") {
+            if (isPriceAndTimeService(line)) {
+                const [priceTime, service] = line.split(' | ');
+                const [price, time] = priceTime.split(' ');
+                trip = {
+                    price: parseFloat(price.replace('₫', '').replace('.', '')),
+                    time: time,
+                    service: service.trim().replace("Xanh SM Bike", "Bike").replace("Siêu tốc", "Express")
+                };
+                trips.push(trip);
+            } else if (price) {
+                if (tripStarted) {
                     trips.push(trip);
                 }
                 trip = {};
@@ -66,39 +124,96 @@ var KTTripsList = function() {
             } else if (isTimeAndService(line)) {
                 const [time, service] = line.split(' | ');
                 trip.time = time.trim();
-                // Chuyển đổi "Xanh SM Bike" thành "Bike" và "Siêu tốc" thành "Express"
                 trip.service = service.trim().replace("Xanh SM Bike", "Bike").replace("Siêu tốc", "Express");
-            } else if (isStatus(line)) {
-                trip.status = line.trim();
-            } else {
-                // Xử lý phần địa chỉ
-                if (!trip.from) {
-                    trip.from = line;
-                } else if (!trip.to) {
-                    trip.to = line;
-                } else {
-                    trip.to += ' ' + line;
-                }
             }
         });
 
-        // Đẩy chuyến đi cuối cùng vào trips nếu không bị hủy và chuyến đi đã bắt đầu
-        if (tripStarted && trip.status !== "Hủy") {
+        if (tripStarted) {
             trips.push(trip);
         }
 
-        // Chỉ lấy các thuộc tính cần thiết: price, time, service
-        const simplifiedTrips = trips.map(trip => ({
-            price: trip.price,
-            time: trip.time,
-            service: trip.service
-        }));
-
-        // Trả về đối tượng JSON thay vì chuỗi JSON
+        const simplifiedTrips = trips.map(trip => ([trip.time,trip.service,trip.price]));
         return simplifiedTrips;
     }
 
+    function removeTrip(targetDate, targetTime) {
+        const trips = JSON.parse(localStorage.getItem('dataTrips'));
     
+        const updatedTrips = trips.map(day => {
+            if (day.d === targetDate) {
+                day.t = day.t.filter(trip => trip[0] !== targetTime);
+            }
+            return day;
+        }).filter(day => day.t.length > 0);
+    
+        localStorage.setItem('dataTrips', JSON.stringify(updatedTrips));
+    }    
+
+    function addTripToLocalStorage(date, online, trips) {
+        const dataTrips = localStorage.getItem('dataTrips') ? JSON.parse(localStorage.getItem('dataTrips')) : [];
+        let foundDate = false;
+    
+        dataTrips.forEach(day => {
+            if (day.d === date) {
+                trips.forEach(trip => {
+                    const existingTripIndex = day.t.findIndex(item => item[0] === trip[0]);
+                    if (existingTripIndex !== -1) {
+                        day.t[existingTripIndex] = trip;
+                    } else {
+                        day.t.push(trip);
+                    }
+                });
+                day.o = online;
+                foundDate = true;
+            }
+        });
+    
+        if (!foundDate) {
+            dataTrips.push({ d: date, o: online, t: trips });
+        }
+    
+        localStorage.setItem('dataTrips', JSON.stringify(dataTrips));
+    }
+
+    function displayTrips() {
+        table.clear().draw();
+        let dataTripsLocal = localStorage.getItem('dataTrips') ? JSON.parse(localStorage.getItem('dataTrips')) : [];
+        let dataTrips = sortTrips(dataTripsLocal)
+        console.log(dataTripsLocal)
+        dataTrips.forEach(day => {
+            const date = day.d
+            const trips = day.t
+            const online = day.o
+            trips.forEach(trip => {
+                const trip_time = trip[0]
+                const trip_service = trip[1]
+                const trip_price = trip[2]
+                let checkbox = '<div class="form-check form-check-sm form-check-custom form-check-solid"><input class="form-check-input" type="checkbox" value="1"></div>';
+                let remove = '<div class="text-end"><a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-trip-table-filter="delete_row">Xóa</a></div>';
+                let calculateBikeKm = ((trip_price - 1000) * 0.933 - 13800) / 4800 + 2
+                let calculateExpressKm = ((trip_price - 1000) * 0.933 - 15000) / 5000 + 2
+                let bikeKm = Math.round(calculateBikeKm * 100) / 100
+                let expressKm = Math.round(calculateExpressKm * 100) / 100
+                let distance = (trip_service === 'Bike') ? bikeKm : expressKm;
+                let serviceBadgeClass = (trip_service === 'Bike') ? 'badge-light-success' : 'badge-light-warning';
+    
+                let iconBike = '<i class="ki-duotone ki-scooter fs-2 me-2 text-success"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span></i>'
+                let iconExpress = '<i class="ki-duotone ki-delivery fs-2 me-2 text-warning"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>'
+                let serviceIcon = (trip_service === 'Bike') ? iconBike : iconExpress
+                let serviceBadge = '<div class="badge ' + serviceBadgeClass + '">' + serviceIcon + trip_service + '</div>';
+                // Thêm hàng mới vào bảng
+                table.row.add([
+                    checkbox,
+                    date,
+                    trip_time,
+                    serviceBadge,
+                    trip_price + '₫',
+                    distance + 'km',
+                    remove
+                ]).draw(false);
+            });
+        });
+    }
 
     // Xóa từng hàng
     function handleDeleteRow() {
@@ -108,9 +223,6 @@ var KTTripsList = function() {
                 var row = event.target.closest("tr");
                 var dateText = row.querySelectorAll("td")[1].innerText;
                 var timeText = row.querySelectorAll("td")[2].innerText;
-
-                console.log(timeText)
-
 
                 Swal.fire({
                     text: "Bạn có chắc chắn muốn xóa " + dateText + " " + timeText + " không?",
@@ -192,7 +304,6 @@ var KTTripsList = function() {
                         checkboxes.forEach(function(checkbox) {
                             if (checkbox.checked) {
                                 var row = checkbox.closest("tbody tr");
-                                console.log(row)
                                 if (row) {
                                     var dateText = row.querySelectorAll("td")[1].innerText;
                                     var timeText = row.querySelectorAll("td")[2].innerText;
@@ -218,81 +329,8 @@ var KTTripsList = function() {
         });
     };
 
-    function removeTrip(date, time) {
-        const trips = JSON.parse(localStorage.getItem('trips'));
-        const updatedTrips = trips.map(day => {
-            if (day.date === date) {
-                day.trips = day.trips.filter(trip => trip.time !== time);
-            }
-            return day;
-        }).filter(day => day.trips.length > 0);
-        localStorage.setItem('trips', JSON.stringify(updatedTrips));
-    }
-
-    function addTripToLocalStorage(date, workingTime, tripArrays) {
-        const trips = localStorage.getItem('trips') ? JSON.parse(localStorage.getItem('trips')) : [];
-        let foundDate = false;
-    
-        // Duyệt qua mỗi chuyến đi trong mảng tripArrays
-        tripArrays.forEach(trip => {
-            trips.forEach(day => {
-                if (day.date === date) {
-                    const existingTripIndex = day.trips.findIndex(item => item.time === trip.time);
-                    if (existingTripIndex !== -1) {
-                        day.trips[existingTripIndex] = trip;
-                    } else {
-                        day.trips.push(trip);
-                    }
-                    day.workingTime = workingTime;
-                    foundDate = true;
-                }
-            });
-            // Nếu không tìm thấy ngày tương ứng trong localStorage, thêm mới ngày đó với chuyến đi đầu tiên
-            if (!foundDate) {
-                trips.push({ date, workingTime, trips: [trip] });
-            }
-        });
-    
-        localStorage.setItem('trips', JSON.stringify(trips));
-    }
-    
-
-    function displayTrips() {
-        table.clear().draw();
-        const trips = localStorage.getItem('trips') ? JSON.parse(localStorage.getItem('trips')) : [];
-        sortTripsByDate(trips)
-
-        trips.forEach(day => {
-            day.trips.forEach(trip => {
-                let checkbox = '<div class="form-check form-check-sm form-check-custom form-check-solid"><input class="form-check-input" type="checkbox" value="1"></div>';
-                let remove = '<div class="text-end"><a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-trip-table-filter="delete_row">Xóa</a></div>';
-                let calculateBikeKm = ((trip.price - 1000) * 0.933 - 13800) / 4800 + 2
-                let calculateExpressKm = ((trip.price - 1000) * 0.933 - 15000) / 5000 + 2
-                let bikeKm = Math.round(calculateBikeKm * 100) / 100
-                let expressKm = Math.round(calculateExpressKm * 100) / 100
-                let distance = (trip.service === 'Bike') ? bikeKm : expressKm;
-                let serviceBadgeClass = (trip.service === 'Bike') ? 'badge-light-success' : 'badge-light-warning';
-
-                let iconBike = '<i class="ki-duotone ki-scooter fs-2 me-2 text-success"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span></i>'
-                let iconExpress = '<i class="ki-duotone ki-delivery fs-2 me-2 text-warning"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>'
-                let serviceIcon = (trip.service === 'Bike') ? iconBike : iconExpress
-                let serviceBadge = '<div class="badge ' + serviceBadgeClass + '">' + serviceIcon + trip.service + '</div>';
-                // Thêm hàng mới vào bảng
-                table.row.add([
-                    checkbox,
-                    day.date,
-                    trip.time,
-                    serviceBadge,
-                    formatVND(trip.price) + 'đ',
-                    distance + 'km',
-                    remove
-                ]).draw(false);
-            });
-        });
-    }
-
     // Cập nhật thanh công cụ
-    var updateToolbar = function() {
+    function updateToolbar() {
         var baseToolbar = document.querySelector('[data-kt-trip-table-toolbar="base"]');
         var selectedToolbar = document.querySelector('[data-kt-trip-table-toolbar="selected"]');
         var selectedCount = document.querySelector('[data-kt-trip-table-select="selected_count"]');
@@ -320,6 +358,8 @@ var KTTripsList = function() {
     return {
         // Khởi tạo
         init: function() {
+            checkDataTripsVersion()
+
             table = $('#dl_trips_table').DataTable({
                 info: false,
                 order: [],
@@ -347,41 +387,27 @@ var KTTripsList = function() {
 
                 // Lấy giá trị từ các trường input
                 var date = document.getElementById('addDate').value;
-                var workingTime = document.getElementById('addOnline').value;
+                var online = document.getElementById('addOnline').value;
                 var text = document.getElementById('addText').value;
 
                 // Chuyển đổi văn bản thành JSON
-                var tripArrays = convertTextToJson(text);
-                console.log(typeof tripArrays);
-
-                // Lấy giá trị ngày
-                var date = document.getElementById('addDate').value;
-
-                // Lấy giá trị thời gian làm việc trực tuyến
-                var workingTime = document.getElementById('addOnline').value;
+                var trips = convertTextToJson(text);
                 
                 // Thêm dữ liệu vào localStorage
-                addTripToLocalStorage(date, workingTime, tripArrays);
+                addTripToLocalStorage(date, online, trips);
                 displayTrips()
 
                 // Cập nhật thanh công cụ
                 updateToolbar();
-
-                // Thông báo
-                const newToast = targetElement.cloneNode(true);
-                const container = document.getElementById('toast_stack_container');
-                container.append(newToast);
-                const toast = bootstrap.Toast.getOrCreateInstance(newToast);
-                toast.show();
             });
 
             // Thông báo
             const targetElement = document.querySelector('[data-toast="stack"]');
             targetElement.parentNode.removeChild(targetElement);
 
-            // Gắn sự kiện submit cho form
+            // Sự kiện tải tệp Json
             document.getElementById('formAddDataFile').addEventListener('submit', function(event) {
-                event.preventDefault(); // Ngăn chặn việc submit form mặc định
+                event.preventDefault();
 
                 const fileInput = document.getElementById('formFileInput');
                 const file = fileInput.files[0];
@@ -396,12 +422,7 @@ var KTTripsList = function() {
                 reader.onload = function(event) {
                     const jsonData = event.target.result;
                     try {
-                        const trips = JSON.parse(jsonData);
-                        if (!Array.isArray(trips)) {
-                            alert("Dữ liệu không hợp lệ. Vui lòng kiểm tra lại tệp JSON.");
-                            return;
-                        }
-                        localStorage.setItem('trips', JSON.stringify(trips));
+                        checkDataUpload(JSON.parse(jsonData))
                         displayTrips();
                     } catch (error) {
                         alert("Đã xảy ra lỗi khi đọc tệp JSON.");
@@ -410,39 +431,6 @@ var KTTripsList = function() {
                 };
 
                 reader.readAsText(file);
-            });
-
-            // Gắn sự kiện click cho nút "Xóa Tất Cả"
-            const buttonResetLocalStroge = document.getElementById('resetDataLocalStorage')
-            buttonResetLocalStroge.addEventListener('click', function() {
-                // Hiển thị cửa sổ xác nhận
-                Swal.fire({
-                    title: 'Xác nhận xóa',
-                    text: 'Bạn có chắc muốn xóa dữ liệu không?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    buttonsStyling: false,
-                    confirmButtonText: "Có, hủy bỏ!",
-                    cancelButtonText: "Không, quay lại",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                        cancelButton: "btn btn-active-light"
-                    }
-                }).then((result) => {
-                    // Nếu người dùng nhấn nút xác nhận
-                    if (result.isConfirmed) {
-                        // Xóa dữ liệu từ localStorage
-                        localStorage.clear();
-                        // Hiển thị dữ liệu sau khi xóa
-                        displayTrips();
-                        // Thông báo xóa thành công (hoặc có thể làm gì đó khác)
-                        Swal.fire(
-                            'Đã xóa!',
-                            'Dữ liệu đã được xóa thành công.',
-                            'success'
-                        );
-                    }
-                });
             });
 
         }

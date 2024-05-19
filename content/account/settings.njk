@@ -1,0 +1,154 @@
+---
+layout: layouts/dashboard.njk
+title: Dashboard
+---
+<!--begin::Content -->
+<div id="kt_app_content" class="app-content flex-column-fluid">
+    <div id="kt_app_content_container" class="app-container container-fluid">
+        <div class="card mb-5 mb-xl-10">
+            <div class="card-body pt-9 pb-0">
+                <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+                    <div class="me-7 mb-4">
+                        <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+                            <span class="symbol-label bg-warning text-inverse-warning fw-bold fs-1"><span id="user_avatar">Ẩn Danh</span></span>
+                            <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                            <div class="d-flex flex-column">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Đối Tác <span id="user_fullname"></span></span>
+                                    <i class="ki-duotone ki-verify fs-1 text-primary"><span class="path1"></span><span class="path2"></span></i>
+                                </div>
+                                <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
+                                    <span href="#" class="d-flex align-items-center text-gray-500 text-hover-primary me-5 mb-2">
+                                    <i class="ki-duotone ki-geolocation fs-4 me-1"><span class="path1"></span><span class="path2"></span></i><span id="user_city">Hà Nội</span>
+                                    </span>
+                                    <span href="#" class="d-flex align-items-center text-gray-500 text-hover-primary me-5 mb-2">
+                                    <i class="ki-duotone ki-profile-circle fs-4 me-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i><span id="user_ambassador">5h</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap flex-stack">
+                            <div class="d-flex flex-column flex-grow-1 pe-8">
+                                <div class="d-flex flex-wrap">
+                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <i class="ki-duotone ki-arrow-up fs-2 text-success me-2"><span class="path1"></span><span class="path2"></span></i>                                    
+                                            <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="4500" data-kt-countup-prefix="$" data-kt-initialized="1">$4,500</div>
+                                        </div>
+                                        <div class="fw-semibold fs-6 text-gray-500">Thu nhập / năm</div>
+                                    </div>
+                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <i class="ki-duotone ki-arrow-down fs-2 text-danger me-2"><span class="path1"></span><span class="path2"></span></i>                                    
+                                            <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="75" data-kt-initialized="1">75</div>
+                                        </div>
+                                        <div class="fw-semibold fs-6 text-gray-500">Chuyến xe / năm</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                    <li class="nav-item mt-2">
+                        <span class="nav-link text-active-primary ms-0 me-10 py-5 active">
+                        Cài Đặt
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card mb-5 mb-xl-10">
+            <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                <div class="card-title m-0">
+                    <h3 class="fw-bold m-0">Hồ Sơ Tài Khoản</h3>
+                </div>
+            </div>
+            <div id="kt_account_settings_profile_details" class="collapse show">
+                <form id="kt_account_profile_details_form" class="form">
+                    <div class="card-body border-top p-9">
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Họ và Tên</label>
+                            <div class="col-lg-8 fv-row">
+                                <input type="text" name="fullname" class="form-control form-control-lg form-control-solid" placeholder="Họ và tên" value="Ẩn Danh" />
+                            </div>
+                        </div>
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Cấp Đại Sứ</label>
+                            <div class="col-lg-8 fv-row">
+                                <select name="ambassador" aria-label="Lựa chọn đại sứ..." data-placeholder="Lựa chọn đại sứ..." class="form-select form-select-solid form-select-lg">
+                                    <option value="">Lựa chọn đại sứ...</option>
+                                    <option value="5h">Đại sứ 5h</option>
+                                    <option value="8h">Đại sứ 8h</option>
+                                    <option value="10h">Đại sứ 10h</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                            <span class="required">Tỉnh/Thành Phố</span>
+                            <span class="ms-1"  data-bs-toggle="tooltip" title="Thành phố đang hoạt động" >
+                            <i class="ki-duotone ki-information-5 text-gray-500 fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i></span>
+                            </label>
+                            <div class="col-lg-8 fv-row">
+                                <select name="city" aria-label="Lựa chọn thành phố..." data-placeholder="Lựa chọn thành phố..." class="form-select form-select-solid form-select-lg fw-semibold">
+                                    <option value="">Lựa chọn thành phố...</option>
+                                    <option value="hanoi">Hà Nội</option>
+                                    <option value="danang">Đà Nẵng</option>
+                                    <option value="hochiminh">Hồ Chí Minh</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6">
+                            <i class="ki-duotone ki-design-1 fs-2tx text-primary me-4"></i>        
+                            <div class="d-flex flex-stack flex-grow-1 ">
+                                <div class=" fw-semibold">
+                                    <div class="fs-6 text-gray-700 ">Dữ liệu này sẽ được sử dụng trong các tính toán. Để thay đổi vui lòng quay trở lại đây để cài đặt.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end py-6 px-9">
+                        <button type="reset" class="btn btn-light btn-active-light-primary me-2">Hủy Bỏ</button>
+                        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Lưu Lại</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_deactivate" aria-expanded="true" aria-controls="kt_account_deactivate">
+                <div class="card-title m-0">
+                    <h3 class="fw-bold m-0">Xóa Dữ Liệu</h3>
+                </div>
+            </div>
+            <div id="kt_delete_account_data" class="collapse show">
+                <form id="kt_delete_account_data_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate">
+                    <div class="card-body border-top p-9">
+                        <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
+                            <i class="ki-duotone ki-information fs-2tx text-warning me-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>        
+                            <div class="d-flex flex-stack flex-grow-1 ">
+                                <div class=" fw-semibold">
+                                    <h4 class="text-gray-900 fw-bold">Bạn Đang Xóa Dữ Liệu Của Mình</h4>
+                                    <div class="fs-6 text-gray-700 ">Website không lưu dữ liệu của bạn. Khi xóa dữ liệu là không thể khôi phục, vui lòng cân nhắc.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-check form-check-solid fv-row fv-plugins-icon-container">
+                            <input name="deactivate" class="form-check-input" type="checkbox" value="" id="deactivate">
+                            <label class="form-check-label fw-semibold ps-2 fs-6" for="deactivate">Tôi xác nhận việc xóa dữ liệu của mình.</label>
+                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end py-6 px-9">
+                        <button id="kt_delete_account_data_submit" type="submit" class="btn btn-danger fw-semibold">Xóa Dữ Liệu</button>
+                    </div>
+                    <input type="hidden">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

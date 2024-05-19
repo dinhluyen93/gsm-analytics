@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;700&display=swap');
+@font-face {
+  font-family: "Binance PLEX";
+  src: url("../fonts/binance-plex/binanceplex.eot");
+  src: url("../fonts/binance-plex/binanceplex.eot?#iefix")format("embedded-opentype"),
+       url("../fonts/binance-plex/binanceplex.woff2")format("woff2"),
+       url("../fonts/binance-plex/binanceplex.woff")format("woff"),
+       url("../fonts/binance-plex/binanceplex.ttf")format("truetype"),
+       url("../fonts/binance-plex/binanceplex.svg#Binance PLEX")format("svg");
+}
+
+:root, [data-bs-theme=light], [data-bs-theme=dark], body {
+  font-family: "Binance PLEX", "Google Sans", sans-serif;
+}

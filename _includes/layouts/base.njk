@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="{{ metadata.language }}">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{{ title or metadata.title }}</title>
+		<meta name="description" content="{{ description or metadata.description }}">
+
+		{#- Atom and JSON feeds included by default #}
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }}">
+		<link rel="alternate" href="/feed/feed.json" type="application/json" title="{{ metadata.title }}">
+
+		{#- Bỏ dấu comment này nếu bạn muốn mọi người biết bạn đã sử dụng Eleventy để xây dựng trang web của mình!  #}
+		{#- <meta name="generator" content="{{ eleventy.generator }}"> #}
+
+		{#-
+		CSS bundles được cung cấp thông qua plugin `eleventy-plugin-bundle`:
+		1. Bạn có thể thêm vào chúng bằng cách sử dụng `{% css %}`
+		2. Bạn có thể lấy chúng bằng cách sử dụng `{% getBundle "css" %}` hoặc `{% getBundleFileUrl "css" %}`
+		3. Bạn có thể làm điều tương tự với JS: {% js %}{% endjs %} và <script>{% getBundle "js" %}</script>
+		4. Tìm hiểu thêm: https://github.com/11ty/eleventy-plugin-bundle
+		#}
+
+		{#- Thêm một chuỗi tùy ý vào bundle #}
+		{%- css %}* { box-sizing: border-box; }{% endcss %}
+		{#- Hoặc thêm từ node_modules #}
+		{# {%- css %}{% include "node_modules/prismjs/themes/prism-okaidia.css" %}{% endcss %} #}
+
+		{#- Hiển thị bundle CSS bằng CSS được nhúng (cho hiệu suất trang nhanh nhất trong môi trường sản xuất) #}
+		<style>{% getBundle "css" %}</style>
+		{#- Hiển thị bundle CSS bằng một tệp riêng biệt, nếu bạn không thể thiết lập chỉ thị CSP style-src: 'unsafe-inline' #}
+		{#- <link rel="stylesheet" href="{% getBundleFileUrl "css" %}"> #}
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Chuyển đến nội dung chính</a>
+
+		<header>
+			<a href="/" class="home-link">{{ metadata.title }}</a>
+
+			{#- Đọc thêm về `eleventy-navigation` tại https://www.11ty.dev/docs/plugins/navigation/ #}
+			<nav>
+				<h2 class="visually-hidden">Menu điều hướng cấp cao</h2>
+				<ul class="nav">
+				{%- for entry in collections.all | eleventyNavigation %}
+					<li class="nav-item"><a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.title }}</a></li>
+				{%- endfor %}
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			{{ content | safe }}
+		</main>
+
+		<footer></footer>
+
+		<!-- Trang này `{{ page.url | htmlBaseUrl }}` được xây dựng vào {% currentBuildDate %} -->
+	</body>
+</html>

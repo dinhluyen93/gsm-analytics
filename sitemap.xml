@@ -2,82 +2,82 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/blog/firstpost/</loc>
+		<loc>https://example.com/gsm-analytics/blog/firstpost/</loc>
 		<lastmod>2018-05-01</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/blog/secondpost/</loc>
+		<loc>https://example.com/gsm-analytics/blog/secondpost/</loc>
 		<lastmod>2018-07-04</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/blog/thirdpost/</loc>
+		<loc>https://example.com/gsm-analytics/blog/thirdpost/</loc>
 		<lastmod>2018-08-24</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/blog/fourthpost/</loc>
+		<loc>https://example.com/gsm-analytics/blog/fourthpost/</loc>
 		<lastmod>2018-09-30</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/about/</loc>
-		<lastmod>2024-05-19</lastmod>
+		<loc>https://example.com/gsm-analytics/about/</loc>
+		<lastmod>2024-05-20</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/account/settings/</loc>
-		<lastmod>2024-05-19</lastmod>
+		<loc>https://example.com/gsm-analytics/account/settings/</loc>
+		<lastmod>2024-05-20</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/blog/</loc>
-		<lastmod>2024-05-19</lastmod>
+		<loc>https://example.com/gsm-analytics/blog/</loc>
+		<lastmod>2024-05-20</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/dashboard/</loc>
-		<lastmod>2024-05-19</lastmod>
+		<loc>https://example.com/gsm-analytics/dashboard/</loc>
+		<lastmod>2024-05-20</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/index-test/</loc>
-		<lastmod>2024-05-19</lastmod>
+		<loc>https://example.com/gsm-analytics/index-test/</loc>
+		<lastmod>2024-05-20</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/</loc>
-		<lastmod>2024-05-19</lastmod>
+		<loc>https://example.com/gsm-analytics/</loc>
+		<lastmod>2024-05-20</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/tags/</loc>
-		<lastmod>2024-05-19</lastmod>
+		<loc>https://example.com/gsm-analytics/tags/</loc>
+		<lastmod>2024-05-20</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/tags/another-tag/</loc>
-		<lastmod>2024-05-19</lastmod>
+		<loc>https://example.com/gsm-analytics/tags/another-tag/</loc>
+		<lastmod>2024-05-20</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/tags/number-2/</loc>
-		<lastmod>2024-05-19</lastmod>
+		<loc>https://example.com/gsm-analytics/tags/number-2/</loc>
+		<lastmod>2024-05-20</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/tags/second-tag/</loc>
-		<lastmod>2024-05-19</lastmod>
+		<loc>https://example.com/gsm-analytics/tags/second-tag/</loc>
+		<lastmod>2024-05-20</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/tags/posts-with-two-tags/</loc>
-		<lastmod>2024-05-19</lastmod>
+		<loc>https://example.com/gsm-analytics/tags/posts-with-two-tags/</loc>
+		<lastmod>2024-05-20</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/trips/</loc>
-		<lastmod>2024-05-19</lastmod>
+		<loc>https://example.com/gsm-analytics/trips/</loc>
+		<lastmod>2024-05-20</lastmod>
 	</url>
 </urlset>

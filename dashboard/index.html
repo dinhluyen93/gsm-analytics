@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Bảng Điều Khiển</title>
     <meta name="description" content="Phân tích và tối ưu hiệu quả hoạt động cho đối tác XanhSMBike.">
     <link rel="alternate" href="/gsm-analytics/feed/feed.xml" type="application/atom+xml" title="GMS Pro">
     <link rel="alternate" href="/gsm-analytics/feed/feed.json" type="application/json" title="GMS Pro">
@@ -115,7 +115,7 @@
                                         </span>
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-semibold">BoomApp by Keenthemes</a>
+                                        <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-semibold">Chưa làm</a>
                                         <span class="fs-7 text-muted fw-semibold">#45789</span>
                                     </div>
                                 </div>
@@ -322,11 +322,8 @@
     </div>
     <div class="app-sidebar-project-default app-sidebar-project-minimize text-center min-h-lg-400px flex-column-auto d-flex flex-column justify-content-end" id="kt_app_sidebar_footer">
         <h2 class="fw-bold text-gray-800">GSM Pro</h2>
-        <div class="fw-semibold text-gray-700 fs-7 lh-2 px-7 mb-1">#1 Phân tích và tối ưu hoạt động</div>
-        <img class="mx-auto h-150px h-lg-175px mb-4" src="/gsm-analytics/assets/media/misc/saul-welcome.png" alt="">            
-        <div class="text-center mb-lg-5 pb-lg-3">
-            <a href="#" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_create_account">Bắt Đầu</a>
-        </div>
+        <div class="fw-semibold text-gray-700 fs-7 lh-2 px-7 mb-1">1 ly trà đá cho đam mê</div>
+        <img class="mx-auto h-150px h-lg-175px mb-10" src="/gsm-analytics/assets/media/misc/donate.jpg" alt="">
     </div>
 </div>
                 </div>
@@ -338,13 +335,13 @@
     <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex justify-content-center align-items-stretch">
         <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap align-items-center gap-4 w-100">
             <h1 class="page-heading lh-0">
-                Dashboard
+                Bảng Điều Khiển
             </h1>
                         <!--begin::Daterangepicker(defined in src/js/layout/app.js)-->
             <div class="btn btn-sm btn-light d-flex align-items-center px-4" id="date_range_picker">           
                 <!--begin::Display range-->
                 <div class="text-gray-600 fw-bold">
-                    Loading date range...
+                    Tải phạm vi ngày...
                 </div>
                 <!--end::Display range-->
 
@@ -375,7 +372,7 @@
                     </div>
                     <div class="card-body pt-2 pb-4 d-flex align-items-center">
                         <div class="d-flex flex-center me-5 pt-2">
-                            <div id="kt_card_widget_4_chart" style="min-width: 70px; min-height: 70px" data-kt-size="70" data-kt-line="11">
+                            <div id="widget_week_income_chart" style="min-width: 70px; min-height: 70px" data-kt-size="70" data-kt-line="11">
                             </div>
                         </div>
                         <div class="d-flex flex-column content-justify-center w-100">
@@ -425,22 +422,22 @@
                 </div>
             </div>
             <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-                <div class="card card-flush  h-md-50 mb-5 mb-xl-10">
+                <div class="card card-flush h-md-50 mb-5 mb-xl-10">
                     <div class="card-header pt-5">
                         <div class="card-title d-flex flex-column">
                             <div class="d-flex align-items-center">
                                 <span class="fs-4 fw-semibold text-gray-500 me-1 align-self-start">₫</span>
-                                <span class="fs-2hx fw-bold text-gray-900 me-2 lh-1 ls-n2">0</span>
+                                <span class="fs-2hx fw-bold text-gray-900 me-2 lh-1 ls-n2" id="weekly_bonus_day">0</span>
                                 <span class="badge badge-light-success fs-base">                                
                                 <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i> 
-                                2.6%
+                                0%
                                 </span>            
                             </div>
                             <span class="text-gray-500 pt-1 fw-semibold fs-6">Vượt chuyến trong tuần</span>
                         </div>
                     </div>
                     <div class="card-body d-flex align-items-end px-0 pb-0">
-                        <div id="kt_card_widget_6_chart" class="w-100" style="height: 80px"></div>
+                        <div id="widget_week_bonus_day_chart" class="w-100" style="height: 80px"></div>
                     </div>
                 </div>
                 <div class="card card-flush h-md-50 mb-xl-10">
@@ -452,32 +449,62 @@
                     </div>
                     <div class="card-body">
                         <div class="d-flex flex-stack">
-                            <div class="text-gray-700 fw-semibold fs-6 me-2">Doanh Số</div>
-                            <div class="d-flex align-items-senter" id="week_avg_sales">
-                                <i class="ki-duotone ki-arrow-up-right fs-2 text-success me-2"><span class="path1"></span><span class="path2"></span></i>  
-                                <span class="text-gray-900 fw-bolder fs-6">0</span> 
-                                <span class="text-gray-500 fw-bold fs-6">/0</span> 
+                            <div class="d-flex align-items-center me-5">
+                                <img src="/gsm-analytics/assets/media/icons/earning.png" class="me-4 w-20px" style="border-radius: 4px" alt="">                     
+                                <div class="me-5">
+                                    <span class="text-gray-800 fw-bold text-hover-primary fs-6">Doanh Số</span>  
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center" id="week_avg_sales">
+                                <span class="text-gray-800 fw-bold fs-4 me-3">0</span>
+                                <span class="badge badge-light-success fs-base">                                
+                                <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i> 0%
+                                </span>
                             </div>
                         </div>
-                        <div class="d-flex flex-stack my-2">
-                            <div class="text-gray-700 fw-semibold fs-6 me-2">Quãng Đường</div>
-                            <div class="d-flex align-items-senter" id="week_avg_km">
-                                <i class="ki-duotone ki-arrow-down-right fs-2 text-danger me-2"><span class="path1"></span><span class="path2"></span></i>                 
-                                <span class="text-gray-900 fw-bolder fs-6">0</span> 
-                            </div>
-                        </div>
-                        <div class="d-flex flex-stack my-2">
-                            <div class="text-gray-700 fw-semibold fs-6 me-2">Chuyến Xe</div>
-                            <div class="d-flex align-items-senter" id="week_avg_trip">
-                                <i class="ki-duotone ki-arrow-up-right fs-2 text-success me-2"><span class="path1"></span><span class="path2"></span></i>  
-                                <span class="text-gray-900 fw-bolder fs-6">0</span> 
-                            </div>
-                        </div>
+                        <div class="separator separator-dashed my-3"></div>
                         <div class="d-flex flex-stack">
-                            <div class="text-gray-700 fw-semibold fs-6 me-2">Điểm Thưởng</div>
-                            <div class="d-flex align-items-senter" id="week_avg_point">
-                                <i class="ki-duotone ki-arrow-up-right fs-2 text-success me-2"><span class="path1"></span><span class="path2"></span></i>  
-                                <span class="text-gray-900 fw-bolder fs-6">0</span> 
+                            <div class="d-flex align-items-center me-5">
+                                <img src="/gsm-analytics/assets/media/icons/kmh.png" class="me-4 w-20px" style="border-radius: 4px" alt="">                     
+                                <div class="me-5">
+                                    <span class="text-gray-800 fw-bold text-hover-primary fs-6">Quãng Đường</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center" id="week_avg_km">
+                                <span class="text-gray-800 fw-bold fs-4 me-3">0</span>
+                                <span class="badge badge-light-success fs-base">                                
+                                <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i> 0%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="separator separator-dashed my-3"></div>
+                        <div class="d-flex flex-stack">
+                            <div class="d-flex align-items-center me-5">
+                                <img src="/gsm-analytics/assets/media/icons/travel.png" class="me-4 w-20px" style="border-radius: 4px" alt="">                     
+                                <div class="me-5">
+                                    <span class="text-gray-800 fw-bold text-hover-primary fs-6">Chuyến Xe</span> 
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center" id="week_avg_trip">
+                                <span class="text-gray-800 fw-bold fs-4 me-3">0</span>
+                                <span class="badge badge-light-success fs-base">                                
+                                <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i> 0%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="separator separator-dashed my-3"></div>
+                        <div class="d-flex flex-stack">
+                            <div class="d-flex align-items-center me-5">
+                                <img src="/gsm-analytics/assets/media/icons/hand-gesture.png" class="me-4 w-20px" style="border-radius: 4px" alt="">                     
+                                <div class="me-5">
+                                    <span class="text-gray-800 fw-bold text-hover-primary fs-6">Điểm Thưởng</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center" id="week_avg_point">
+                                <span class="text-gray-800 fw-bold fs-4 me-3">0</span>
+                                <span class="badge badge-light-success fs-base">                                
+                                <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i> 0%
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -487,17 +514,17 @@
                 <div class="card card-flush overflow-hidden h-md-100">
                     <div class="card-header py-5">
                         <h3 class="card-title align-items-start flex-column">            
-                            <span class="card-label fw-bold text-gray-900">Doanh Số Trong Tháng</span>
-                            <span class="text-gray-500 mt-1 fw-semibold fs-6">Chỉ tính thu nhập từ chuyến xe</span>
+                            <span class="card-label fw-bold text-gray-900">Biểu Đồ Doanh Số</span>
+                            <span class="text-gray-500 mt-1 fw-semibold fs-6">Dữ liệu trong 30 ngày gần nhất</span>
                         </h3>
                     </div>
                     <div class="card-body d-flex justify-content-between flex-column pb-1 px-0">
                         <div class="px-9 mb-5">
                             <div class="d-flex mb-2">
-                                <span class="fs-4 fw-semibold text-gray-500 me-1">$</span>
-                                <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2">14,094</span>                
+                                <span class="fs-4 fw-semibold text-gray-500 me-1">₫</span>
+                                <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2" id="month_sales_show">0</span>                
                             </div>
-                            <span class="fs-6 fw-semibold text-gray-500">Thiếu 8.5 triệu đến mục tiêu</span>
+                            <span class="fs-6 fw-semibold text-gray-500" id="month_sales_missing">Thiếu 8.5 triệu đến mục tiêu</span>
                         </div>
                         <div id="kt_charts_widget_3" class="min-h-auto ps-4 pe-6" style="height: 300px"></div>
                     </div>
@@ -870,7 +897,7 @@
                                     <label class="form-label required">Business Name</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input name="business_name" class="form-control form-control-lg form-control-solid" value="Keenthemes Inc.">
+                                    <input name="business_name" class="form-control form-control-lg form-control-solid" value="Themes Inc.">
                                     <!--end::Input-->
                                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
                                 </div>
@@ -893,7 +920,7 @@
                                         <div class='separator separator-dashed my-2'></div>
                                         <div class='d-flex flex-stack text-gray-900 fw-bold mb-2'>
                                         <div>USD345.00</div>
-                                        <div>KEENTHEMES*</div>
+                                        <div>THEMES*</div>
                                         </div>
                                         <div class='d-flex flex-stack text-muted mb-2'>
                                         <div>USD75.00</div>
@@ -908,7 +935,7 @@
                                     <i class="ki-duotone ki-information-5 text-gray-500 fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i></span>        </label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input name="business_descriptor" class="form-control form-control-lg form-control-solid" value="KEENTHEMES">
+                                    <input name="business_descriptor" class="form-control form-control-lg form-control-solid" value="THEMES">
                                     <!--end::Input-->
                                     <!--begin::Hint-->
                                     <div class="form-text">
@@ -1222,9 +1249,7 @@
 
     
         
-            <script src="/gsm-analytics/assets/js/custom/widget.js"></script>
-        
-            <script src="/gsm-analytics/assets/js/custom/utilities/calculate/daily.js"></script>
+            <script src="/gsm-analytics/assets/js/custom/dashboard/widget.js"></script>
         
     
 </body>

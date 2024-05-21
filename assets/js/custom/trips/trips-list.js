@@ -69,20 +69,18 @@ var KTTripsList = function() {
     }
 
     function sortTrips(trips) {
-        return trips.sort((a, b) => {
-            const dateA = new Date(a.d);
-            const dateB = new Date(b.d);
-            
-            if (dateA.getTime() !== dateB.getTime()) {
-                return dateB - dateA; // Sắp xếp theo ngày giảm dần
-            } else {
-                return a.trips.sort((tripA, tripB) => {
-                    const timeA = new Date('1970/01/01 ' + tripA[0]);
-                    const timeB = new Date('1970/01/01 ' + tripB[0]);
-                    return timeA - timeB; // Sắp xếp các chuyến đi trong cùng một ngày theo thời gian tăng dần
-                });
-            }
+        // Sắp xếp các chuyến xe trong mỗi đối tượng theo thời gian tăng dần
+        trips.forEach(day => {
+            day.t.sort((a, b) => {
+            const timeA = a[0].split(':').map(Number);
+            const timeB = b[0].split(':').map(Number);
+            return timeA[0] - timeB[0] || timeA[1] - timeB[1];
+            });
         });
+        // Sắp xếp các đối tượng theo ngày tăng dần
+        trips.sort((a, b) => new Date(b.d) - new Date(a.d));
+
+        return trips
     }
 
     function convertTextToJson(text) {
@@ -179,7 +177,7 @@ var KTTripsList = function() {
         table.clear().draw();
         let dataTripsLocal = localStorage.getItem('dataTrips') ? JSON.parse(localStorage.getItem('dataTrips')) : [];
         let dataTrips = sortTrips(dataTripsLocal)
-        console.log(dataTripsLocal)
+        localStorage.setItem('dataTrips', JSON.stringify(dataTrips));
         dataTrips.forEach(day => {
             const date = day.d
             const trips = day.t
@@ -207,7 +205,7 @@ var KTTripsList = function() {
                     date,
                     trip_time,
                     serviceBadge,
-                    trip_price + '₫',
+                    formatCurrency(trip_price) + '₫',
                     distance + 'km',
                     remove
                 ]).draw(false);

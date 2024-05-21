@@ -566,10 +566,13 @@ function updateDateRange(start, end) {
     let weekly_point_percent = document.getElementById('weekly_point_percent');
     let weekly_point_progress = document.getElementById('weekly_point_progress');
 
-    weekly_point_reward.innerText = result.bonus.week.currentBonus;
+    weekly_point_reward.innerText = result.bonus.week.currentBonus.toLocaleString('vi-VN');
     weekly_point_missing.innerText = "Thiếu " + result.bonus.week.missingPoint + " điểm nhận " + result.bonus.week.nextBonus.toLocaleString('vi-VN') + "₫";
     weekly_point_percent.innerText = result.bonus.week.percentPoint + "%";
     weekly_point_progress.innerHTML = `<div class="bg-success rounded h-8px" role="progressbar" style="width: ${result.bonus.week.percentPoint}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>`
+
+    let weekly_bonus_day = document.getElementById('weekly_bonus_day');
+    weekly_bonus_day.innerText = result.bonus.daytoLocaleString('vi-VN');
 
     let week_avg_sales = document.getElementById('week_avg_sales');
     let week_avg_km = document.getElementById('week_avg_km');

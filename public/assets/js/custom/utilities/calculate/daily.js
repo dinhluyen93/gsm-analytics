@@ -113,6 +113,8 @@ localStorage.setItem("dataBonus", JSON.stringify(dataBonusArr));
 var dataBonus = localStorage.getItem('dataBonus') ? JSON.parse(localStorage.getItem('dataBonus')) : [];
 var dataUser = localStorage.getItem('dataTrips') ? JSON.parse(localStorage.getItem('dataUser')) : [];
 
+
+
 // Lấy dữ liệu người dùng theo cài đặt
 function getConfigs(dataUser, dataBonus){
     // dataUser: Dữ liệu cài đặt người dùng
@@ -144,6 +146,31 @@ function getConfigs(dataUser, dataBonus){
             }
         }
     }
+}
+
+// Sắp xếp dữ liệu
+function sortTrips(trips) {
+    // Sắp xếp các chuyến xe trong mỗi đối tượng theo thời gian tăng dần
+    trips.forEach(day => {
+        day.t.sort((a, b) => {
+        const timeA = a[0].split(':').map(Number);
+        const timeB = b[0].split(':').map(Number);
+        return timeA[0] - timeB[0] || timeA[1] - timeB[1];
+        });
+    });
+    // Sắp xếp các đối tượng theo ngày tăng dần
+    trips.sort((a, b) => new Date(b.d) - new Date(a.d));
+
+    return trips
+}
+
+// Định dạng tiền tệ
+function formatCurrency(amount) {
+    // Chuyển số thành chuỗi để dễ xử lý và tách phần nguyên
+    let integerPart = Math.floor(amount).toString();
+    // Thêm dấu phẩy cho phần nguyên
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return integerPart;
 }
 
 // Lấy số ngày trong tuần từ chuỗi ngày
@@ -344,7 +371,7 @@ function getRangeAnalytics(dataTrips, startDateString, endDateString){
 }
 
 // Lấy dữ liệu phân tích ngày
-function getDailyAnalytics(day){
+function getDailyAnalytics(dayData){
     // data: Dữ liệu ngày {"d": "", "o": "5:00", "t":[["06:16","Bike","64000"]]}
     let result = {
         online: "0:00",
@@ -375,11 +402,10 @@ function getDailyAnalytics(day){
         }
     }
     // Nếu có chuyến xe trong ngày
-    const dayDate = day.d;
-    const dayOnline = day.o;
-    const dayTrips = day.t;
+    const dayDate = dayData.d;
+    const dayOnline = dayData.o;
+    const dayTrips = dayData.t;
 
-    result.online = dayOnline
     if (dayTrips){
         const tripDayOfWeek = getDayOfWeekIndex(dayDate);
         if (tripDayOfWeek === -1) {
@@ -504,115 +530,141 @@ function getDailyAnalytics(day){
             }
 
         });
+
+        result.online = dayOnline
+        result.trips.express = result.trips.total - result.trips.bike
+        result.trips.other = result.trips.total - result.trips.peakHours
+    
+        result.points.express = result.points.total - result.points.bike
+        result.points.other = result.points.total - result.points.peakHours
+    
+        // Làm tròn số
+        result.kilometer = parseFloat(result.kilometer.toFixed(2));
+    
+        const workingMin = timeStringToMinutes(result.online)
+        result.avgs.km = result.kilometer / workingMin * 60
+        result.avgs.earning = result.earning / workingMin * 60
+        result.avgs.point = result.points.total / workingMin * 60
+        result.avgs.trip = result.trips.total / workingMin * 60
+    
+        const _dataBonus = getConfigs(dataUser, dataBonus)
+        result.bonus.day = getBonusDaily(result.trips.total, _dataBonus.exceededRides)
     }
-
-    result.trips.express = result.trips.total - result.trips.bike
-    result.trips.other = result.trips.total - result.trips.peakHours
-
-    result.points.express = result.points.total - result.points.bike
-    result.points.other = result.points.total - result.points.peakHours
-
-    // Làm tròn số
-    result.kilometer = parseFloat(result.kilometer.toFixed(2));
-
-    const workingMin = timeStringToMinutes(result.online)
-    result.avgs.km = result.kilometer / workingMin * 60
-    result.avgs.earning = result.earning / workingMin * 60
-    result.avgs.point = result.points.total / workingMin * 60
-    result.avgs.trip = result.trips.total / workingMin * 60
-
-    const _dataBonus = getConfigs(dataUser, dataBonus)
-    result.bonus.day = getBonusDaily(result.trips.total, _dataBonus.exceededRides)
 
     return result
 }
 
-// Đặt thời gian mặc định là tuần này
-function setDefaultDateRange() {
-    // Lấy ngày bắt đầu và kết thúc của tuần này
-    var startOfWeek = moment().startOf('isoWeek');
-    var endOfWeek = moment().endOf('isoWeek');
-
-    // Thiết lập ngày bắt đầu và kết thúc cho date range picker
-    $("#date_range_picker").data('daterangepicker').setStartDate(startOfWeek);
-    $("#date_range_picker").data('daterangepicker').setEndDate(endOfWeek);
-
-    // Gọi hàm updateDateRange để cập nhật giao diện
-    updateDateRange(startOfWeek, endOfWeek);
-}
-
-// Sự kiện khi thay đổi khung thời gian tuần
-function updateDateRange(start, end) {
-    $("#date_range_picker").html(start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY"));
-
-    // Lấy giá trị start và end sau khi người dùng chọn phạm vi ngày
-    var startDateString = start.format("YYYY-MM-DD");
-    var endDateString = end.format("YYYY-MM-DD");
-
-    const result = getRangeAnalytics(dataTrips, startDateString, endDateString)
-
-    let weekly_earning_total = document.getElementById('weekly_earning_total');
-    let weekly_earning_sales = document.getElementById('weekly_earning_sales');
-    let weekly_earning_bonus_week = document.getElementById('weekly_earning_bonus_week');
-    let weekly_earning_bonus_day = document.getElementById('weekly_earning_bonus_day');
-
-    weekly_earning_total.innerText = (result.earning + result.bonus.week.currentBonus + result.bonus.peakHours + result.bonus.day).toLocaleString('vi-VN');
-    weekly_earning_sales.innerText = result.earning.toLocaleString('vi-VN') + "₫";
-    weekly_earning_bonus_week.innerText = (result.bonus.week.currentBonus + result.bonus.peakHours).toLocaleString('vi-VN') + "₫";
-    weekly_earning_bonus_day.innerText = result.bonus.day.toLocaleString('vi-VN') + "₫";
-
-    let weekly_point_reward = document.getElementById('weekly_point_reward');
-    let weekly_point_missing = document.getElementById('weekly_point_missing');
-    let weekly_point_percent = document.getElementById('weekly_point_percent');
-    let weekly_point_progress = document.getElementById('weekly_point_progress');
-
-    weekly_point_reward.innerText = result.bonus.week.currentBonus.toLocaleString('vi-VN');
-    weekly_point_missing.innerText = "Thiếu " + result.bonus.week.missingPoint + " điểm nhận " + result.bonus.week.nextBonus.toLocaleString('vi-VN') + "₫";
-    weekly_point_percent.innerText = result.bonus.week.percentPoint + "%";
-    weekly_point_progress.innerHTML = `<div class="bg-success rounded h-8px" role="progressbar" style="width: ${result.bonus.week.percentPoint}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>`
-
-    let weekly_bonus_day = document.getElementById('weekly_bonus_day');
-    weekly_bonus_day.innerText = result.bonus.daytoLocaleString('vi-VN');
-
-    let week_avg_sales = document.getElementById('week_avg_sales');
-    let week_avg_km = document.getElementById('week_avg_km');
-    let week_avg_trip = document.getElementById('week_avg_trip');
-    let week_avg_point = document.getElementById('week_avg_point');
-
-    week_avg_sales.innerHTML = `
-    <i class="ki-duotone ki-arrow-up-right fs-2 text-success me-2"><span class="path1"></span><span class="path2"></span></i>  
-    <span class="text-gray-900 fw-bolder fs-6">${result.avgs.earning.toLocaleString('vi-VN')}₫/giờ</span>
-    `
-    week_avg_km.innerHTML = `
-    <i class="ki-duotone ki-arrow-up-right fs-2 text-success me-2"><span class="path1"></span><span class="path2"></span></i>  
-    <span class="text-gray-900 fw-bolder fs-6">${result.avgs.kilometer}km/giờ</span>
-    `
-    week_avg_trip.innerHTML = `
-    <i class="ki-duotone ki-arrow-up-right fs-2 text-success me-2"><span class="path1"></span><span class="path2"></span></i>  
-    <span class="text-gray-900 fw-bolder fs-6">${result.avgs.trip}/giờ</span>
-    `
-    week_avg_point.innerHTML = `
-    <i class="ki-duotone ki-arrow-up-right fs-2 text-success me-2"><span class="path1"></span><span class="path2"></span></i>  
-    <span class="text-gray-900 fw-bolder fs-6">${result.avgs.point}/giờ</span>
-    `
-}
-
-$(document).ready(function() {
-    // Lấy dữ liệu tuần
-    var defaultStartDate = moment().subtract(29, "days");
-    var defaultEndDate = moment();
-    // Lựa chọn ngày tháng
-    $("#date_range_picker").daterangepicker({
-        startDate: defaultStartDate,
-        endDate: defaultEndDate,
-        showCustomRangeLabel: false,
-        ranges: {
-            "Tuần Này": [moment().isoWeekday(1), moment().isoWeekday(7)],
-            "Tuần Trước": [moment().subtract(1, "week").isoWeekday(1),moment().subtract(1, "week").isoWeekday(7)],
-            "Hai Tuần Trước": [moment().subtract(2, "week").isoWeekday(1),moment().subtract(2, "week").isoWeekday(7)],
-            "Ba Tuần Trước": [moment().subtract(3, "week").isoWeekday(1),moment().subtract(3, "week").isoWeekday(7)]
+function filterDailyAnalytics(dateString) {
+    let defaultData = {
+        online: "0:00",
+        earning: 0,
+        kilometer: 0,
+        points: {
+            total: 0,
+            bike: 0,
+            express: 0,
+            peakHours: 0,
+            other: 0
+        },
+        trips: {
+            total: 0,
+            bike: 0,
+            express: 0,
+            peakHours: 0,
+            other: 0
+        },
+        avgs: {
+            earning: 0,
+            trip: 0,
+            point: 0,
+            km: 0
+        },
+        bonus: {
+            day: 0
         }
-    }, updateDateRange);
-    setDefaultDateRange();
+    };
+    const result = dataTrips.find(entry => entry.d === dateString);
+    if (result){
+        return getDailyAnalytics(result);
+    } else {
+        return defaultData;
+    }
+}
 
-});
+// Hàm để tạo mảng các ngày từ startDate đến endDate
+function generateDateArray(startDate, endDate) {
+    let dateArray = [];
+    while (startDate <= endDate) {
+        let formattedDate = startDate.toISOString().split('T')[0];
+        dateArray.push(formattedDate);
+        startDate.setDate(startDate.getDate() + 1);
+    }
+    return dateArray;
+}
+
+function getFirstAndLastDayOfMonth() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    return {
+        firstDay: firstDay,
+        lastDay: lastDay
+    };
+}
+
+function findMinMax(arr) {
+    // Kiểm tra xem mảng có rỗng không
+    if (arr.length === 0) {
+        return "Mảng rỗng";
+    }
+
+    let min = arr[0]; // Giả sử phần tử đầu tiên là số nhỏ nhất
+    let max = arr[0]; // Giả sử phần tử đầu tiên là số lớn nhất
+
+    // Duyệt qua mảng để tìm số nhỏ nhất và số lớn nhất
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] < min) {
+            min = arr[i]; // Cập nhật số nhỏ nhất nếu tìm thấy số nhỏ hơn
+        }
+        if (arr[i] > max) {
+            max = arr[i]; // Cập nhật số lớn nhất nếu tìm thấy số lớn hơn
+        }
+    }
+
+    return {
+        min: min,
+        max: max
+    };
+}
+
+function getRecentDates(numDays) {
+    const recentDates = [];
+    const millisecondsPerDay = 24 * 60 * 60 * 1000; // Số milliseconds trong một ngày
+
+    // Lấy ngày hiện tại
+    const currentDate = new Date();
+
+    // Lặp qua số ngày cần lấy
+    for (let i = 0; i < numDays; i++) {
+        // Tính toán ngày trước đó dựa trên số ngày cần lấy
+        const previousDate = new Date(currentDate.getTime() - i * millisecondsPerDay);
+        recentDates.push(formatDate(previousDate));
+    }
+
+    return recentDates;
+}
+
+function formatDate(date) {
+    const year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    // Đảm bảo rằng tháng và ngày có dạng "0X" nếu cần
+    month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
+
+    // Tạo chuỗi định dạng "YYYY-MM-DD"
+    return `${year}-${month}-${day}`;
+}

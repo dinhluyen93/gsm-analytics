@@ -80,7 +80,10 @@
 
 
     {% set scripts = {
-        'dashboard': ['/assets/js/custom/widget.js'],
+        'dashboard': [
+            '/assets/js/custom/widget.js',
+            '/assets/js/custom/utilities/calculate/daily.js'
+        ],
         'trips': [
             '/assets/plugins/custom/datatables/datatables.bundle.js',
             '/assets/js/custom/trips/trips-list.js',

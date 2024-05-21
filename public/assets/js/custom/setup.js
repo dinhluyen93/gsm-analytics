@@ -1,7 +1,7 @@
 "use strict";
 
-var SetupUserData = function() {
-    var userData;
+var SetupdataUser = function() {
+    var dataUser;
 
     const userAvatarButton = document.getElementById('user_avatar_button');
     const userAvatarHover = document.getElementById('user_avatar_hover');
@@ -26,31 +26,31 @@ var SetupUserData = function() {
 
     return {
         init: function() {
-            userData = JSON.parse(localStorage.getItem('userData'));
-            if (!userData) {
-                userData = {
+            dataUser = JSON.parse(localStorage.getItem('dataUser'));
+            if (!dataUser) {
+                dataUser = {
                     fullname: "Ẩn Danh",
                     city: "hanoi",
                     ambassador: "8h"
                 };
-                localStorage.setItem('userData', JSON.stringify(userData));
+                localStorage.setItem('dataUser', JSON.stringify(dataUser));
             }
 
-            userAvatarHover.innerText = getFirstLetter(userData.fullname)
-            userAvatarButton.innerText = getFirstLetter(userData.fullname)
-            userFullnameHover.innerText = userData.fullname
-            if (userData.city === "hanoi"){
+            userAvatarHover.innerText = getFirstLetter(dataUser.fullname)
+            userAvatarButton.innerText = getFirstLetter(dataUser.fullname)
+            userFullnameHover.innerText = dataUser.fullname
+            if (dataUser.city === "hanoi"){
                 userCityHover.innerText = "Hà Nội"
-            } else if (userData.city === "danang") {
+            } else if (dataUser.city === "danang") {
                 userCityHover.innerText = "Đà Nẵng"
             } else {
                 userCityHover.innerText = "Hồ Chí Minh"
             }
-            userAmbassadorHover.innerText = userData.ambassador
+            userAmbassadorHover.innerText = dataUser.ambassador
         }
     };
 }();
 
 KTUtil.onDOMContentLoaded(function() {
-    SetupUserData.init();
+    SetupdataUser.init();
 });

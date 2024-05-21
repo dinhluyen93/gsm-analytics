@@ -1,7 +1,7 @@
 "use strict";
 
 var KTAccountSettingsProfileDetails = (function() {
-    var e, t, userData;
+    var e, t, dataUser;
     const userAvatar = document.getElementById('user_avatar');
     const userFullname = document.getElementById('user_fullname');
     const userCity = document.getElementById('user_city');
@@ -21,23 +21,23 @@ var KTAccountSettingsProfileDetails = (function() {
         init: function() {
             e = document.getElementById("kt_account_profile_details_form");
 
-            userData = JSON.parse(localStorage.getItem('userData'));
-            if (userData) {
-                console.log(userData)
-                e.querySelector('[name="fullname"]').value = userData.fullname;
-                e.querySelector('[name="city"]').value = userData.city;
-                e.querySelector('[name="ambassador"]').value = userData.ambassador;
+            dataUser = JSON.parse(localStorage.getItem('dataUser'));
+            if (dataUser) {
+                console.log(dataUser)
+                e.querySelector('[name="fullname"]').value = dataUser.fullname;
+                e.querySelector('[name="city"]').value = dataUser.city;
+                e.querySelector('[name="ambassador"]').value = dataUser.ambassador;
 
-                userAvatar.innerText = getLastWord(userData.fullname)
-                userFullname.innerText = userData.fullname
-                if (userData.city === "hanoi"){
+                userAvatar.innerText = getLastWord(dataUser.fullname)
+                userFullname.innerText = dataUser.fullname
+                if (dataUser.city === "hanoi"){
                     userCity.innerText = "Hà Nội"
-                } else if (userData.city === "danang") {
+                } else if (dataUser.city === "danang") {
                     userCity.innerText = "Đà Nẵng"
                 } else {
                     userCity.innerText = "Hồ Chí Minh"
                 }
-                userAmbassador.innerText = userData.ambassador
+                userAmbassador.innerText = dataUser.ambassador
             } else {
                 console.log('Chưa có dữ liệu')
                 e.querySelector('[name="fullname"]').value = 'Ẩn Danh';
@@ -105,12 +105,12 @@ var KTAccountSettingsProfileDetails = (function() {
                             var ambassador = e.querySelector('[name="ambassador"]').value;
 
                             // Lưu dữ liệu vào localStorage
-                            var userData = {
+                            var dataUser = {
                                 fullname: fullname,
                                 city: city,
                                 ambassador: ambassador
                             };
-                            localStorage.setItem('userData', JSON.stringify(userData));
+                            localStorage.setItem('dataUser', JSON.stringify(dataUser));
 
                             // Giả sử dữ liệu được lưu thành công
                             Swal.fire({

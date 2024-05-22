@@ -12,66 +12,6 @@ function setDefaultDateRange() {
     updateDateRange(startOfWeek, endOfWeek);
 }
 
-function chart_scatter_chart_1(dataTrips){
-    var e = document.getElementById("chart_scatter_chart_1");
-    if (e) {
-        e.innerHTML = '';
-        let data = []
-        const getData = dataTrips.slice(0, 15);
-        for (let day of getData){
-            for (let trip of day.t){
-                data.push(trip)
-            }
-        }
-
-        const seriesData = data.map(item => {
-            const timeParts = item[0].split(':');
-            const timeInMinutes = parseInt(timeParts[0]) * 60 + parseInt(timeParts[1]);
-            return {
-                x: timeInMinutes,
-                y: parseInt(item[2])
-            };
-        });
-        console.log(seriesData)
-    
-        const scatterOptions = {
-            chart: {
-                height: 350,
-                type: 'scatter',
-                zoom: {
-                    enabled: true,
-                    type: 'xy'
-                }
-            },
-            series: [{
-                name: 'Giá tiền (VND)',
-                data: seriesData
-            }],
-            xaxis: {
-                tickAmount: 10,
-                title: {
-                    text: 'Thời gian (phút)'
-                },
-                labels: {
-                    formatter: function(value) {
-                        const hours = Math.floor(value / 60);
-                        const minutes = value % 60;
-                        return `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
-                    }
-                }
-            },
-            yaxis: {
-                title: {
-                    text: 'Giá tiền (VND)'
-                }
-            }
-        };
-    
-        const scatterChart = new ApexCharts(e, scatterOptions);
-        scatterChart.render();
-    }
-}
-
 function widget_week_income_chart(dataAnalytics){
     var e = document.getElementById("widget_week_income_chart");
     e.innerHTML = ''
@@ -570,6 +510,9 @@ function card_daily_chart_bar(elementId, currentDate) {
                     tooltip: {
                         style: {
                             fontSize: "12px"
+                        },
+                        y: {
+                            show: false,
                         }
                     },
                     grid: {

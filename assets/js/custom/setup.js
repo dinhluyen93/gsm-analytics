@@ -416,10 +416,10 @@ function getRangeAnalytics(dataTrips, startDateString, endDateString){
     result.bonus.week = getBonusWeek(result.points.total)
     result.bonus.peakHours = getBonusPeakHour(result.trips.peakHours)
 
-    result.avgs.earning = Math.round(result.earning / 7);
-    result.avgs.kilometer = (result.kilometer / 7).toFixed(2)
-    result.avgs.trip = (result.trips.total / 7).toFixed(2)
-    result.avgs.point = (result.points.total / 7).toFixed(2)
+    result.avgs.earning = Math.round(result.earning / timeWeed * 60);
+    result.avgs.kilometer = (result.kilometer / timeWeed * 60).toFixed(2)
+    result.avgs.trip = (result.trips.total / timeWeed * 60).toFixed(2)
+    result.avgs.point = (result.points.total / timeWeed * 60).toFixed(2)
 
     console.log(result)
     return result

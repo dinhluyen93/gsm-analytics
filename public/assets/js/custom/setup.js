@@ -723,3 +723,74 @@ function formatDate(date) {
     // Tạo chuỗi định dạng "YYYY-MM-DD"
     return `${year}-${month}-${day}`;
 }
+
+function getDataByDate(dataArray, dateString) {
+    return dataArray.find(item => item.d === dateString) || null;
+}
+
+function getCurrentDateString(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}`;
+}
+
+function formatCurrencyShort(amount) {
+    if (amount >= 1e6) {
+        return (amount / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
+    } else if (amount >= 1e3) {
+        return (amount / 1e3).toFixed(1).replace(/\.0$/, '') + 'k';
+    }
+    return amount.toString();
+}
+
+function mergePricesByHour(data) {
+    let mergedData = {};
+
+    // Duyệt qua mảng dữ liệu ban đầu
+    for (let i = 0; i < data.length; i++) {
+        let [time, service, price] = data[i];
+        let hour = time.split(':')[0]; // Lấy giờ từ chuỗi thời gian
+
+        // Nếu giờ đã tồn tại trong đối tượng mergedData, cộng giá mới vào giá đã có
+        if (mergedData[hour]) {
+            mergedData[hour] += price;
+        } else {
+            mergedData[hour] = price;
+        }
+    }
+
+    // Chuyển đổi đối tượng thành mảng
+    let result = [];
+    for (let hour in mergedData) {
+        result.push([hour + ':00', mergedData[hour]]);
+    }
+
+    // Sắp xếp lại mảng
+    result.sort((a, b) => {
+        return a[0].localeCompare(b[0]);
+    });
+    return result;
+}
+
+function separateTimeAndPrice(data) {
+    let categories = []; // Mảng chứa thời gian
+    let prices = []; // Mảng chứa giá
+
+    // Duyệt qua mảng dữ liệu ban đầu
+    for (let i = 0; i < data.length; i++) {
+        let [time, price] = data[i];
+        let hour = time.split(':')[0]; // Lấy giờ từ chuỗi thời gian
+
+        // Thêm thời gian vào mảng categories nếu chưa tồn tại
+        if (!categories.includes(hour + ':00')) {
+            categories.push(hour + ':00');
+        }
+
+        // Thêm giá vào mảng prices
+        prices.push(price);
+    }
+
+    return { categories, prices };
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Column Chart with ApexCharts</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts"></link>
+</head>
+<body>
+    <div id="chart"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            // Dữ liệu của bạn
+            var data = {
+                "d": "2024-05-15",
+                "o": "8:00",
+                "t": [
+                    ["15:54", "Bike", 41000],
+                    ["10:25", "Bike", 16000]
+                ]
+            };
+
+            // Chuẩn bị dữ liệu cho biểu đồ
+            var chartData = [];
+            data.t.forEach(function(entry) {
+                var time = entry[0];
+                var type = entry[1];
+                var value = entry[2];
+                chartData.push({
+                    x: time,
+                    y: value,
+                    type: type
+                });
+            });
+
+            // Khởi tạo và vẽ biểu đồ cột
+            var options = {
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                    width: '100%'
+                },
+                series: [{
+                    data: chartData
+                }],
+                xaxis: {
+                    type: 'datetime',
+                    labels: {
+                        datetimeUTC: false
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Value'
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                fill: {
+                    opacity: 1
+                },
+                title: {
+                    text: 'Column Chart with ApexCharts',
+                    align: 'left'
+                }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
+            chart.render();
+        });
+    </script>
+</body>
+</html>

@@ -57,6 +57,11 @@
 	</url>
 	
 	<url>
+		<loc>https://example.com/gsm-analytics/tags/another-tag/</loc>
+		<lastmod>2024-05-22</lastmod>
+	</url>
+	
+	<url>
 		<loc>https://example.com/gsm-analytics/tags/number-2/</loc>
 		<lastmod>2024-05-22</lastmod>
 	</url>
@@ -68,11 +73,6 @@
 	
 	<url>
 		<loc>https://example.com/gsm-analytics/tags/posts-with-two-tags/</loc>
-		<lastmod>2024-05-22</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://example.com/gsm-analytics/tags/another-tag/</loc>
 		<lastmod>2024-05-22</lastmod>
 	</url>
 	

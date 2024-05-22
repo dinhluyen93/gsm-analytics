@@ -22,7 +22,7 @@
 }
 
 :root, [data-bs-theme=light], [data-bs-theme=dark], body {
-  font-family: "Binance PLEX", "Google Sans", sans-serif;
+  font-family: "Google Sans", sans-serif;
 }</style>
 
     <script>
@@ -354,7 +354,15 @@
 <!--begin::Content -->
 <div id="kt_app_content" class="app-content flex-column-fluid">
     <div id="kt_app_content_container" class="app-container container-fluid">
-        <div class="row g-5 g-xl-10 mb-xl-10">
+        <div class="row g-5 g-xl-10">
+            <div class="col-xl-4 mb-xl-10">
+                <div class="card card-flush h-xl-100" id="card_daily_statistics"></div>
+            </div>
+            <div class="col-xl-8 mb-5 mb-xl-10">
+                <div class="card card-flush h-xl-100" id="card_daily_chart_bar"></div>
+            </div>
+        </div>
+        <div class="row gy-5 g-xl-10">
             <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
                 <div class="card card-flush h-md-50 mb-5 mb-xl-10" id="weekly_earning">
                     <div class="card-header pt-5">

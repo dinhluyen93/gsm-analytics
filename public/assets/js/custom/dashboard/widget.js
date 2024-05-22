@@ -577,8 +577,6 @@ function updateDateRange(start, end) {
     <i class="ki-duotone ki-arrow-up-right fs-2 text-success me-2"><span class="path1"></span><span class="path2"></span></i>  
     <span class="text-gray-800 fw-bold fs-6">${dataAnalytics.avgs.point}<small class="text-gray-500">/h</small></span>
     `
-
-    chart_scatter_chart_1(dataTrips)
 }
 
 $(document).ready(function() {

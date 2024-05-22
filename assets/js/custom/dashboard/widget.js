@@ -266,7 +266,7 @@ function card_daily_statistics(){
             }
 
             let content = `
-            <div class="card-header rounded bgi-no-repeat bgi-size-cover bgi-position-y-top bgi-position-x-center align-items-start h-250px" style="background-image:url('/assets/media/svg/shapes/top-green.png" data-bs-theme="light">
+            <div class="card-header rounded bgi-no-repeat bgi-size-cover bgi-position-y-top bgi-position-x-center align-items-start h-250px" style="background-image:url('https://dinhluyen93.github.io/gsm-analytics/assets/media/svg/shapes/top-green.png" data-bs-theme="light">
                 <h3 class="card-title align-items-start flex-column text-white pt-15">
                     <span class="fw-bold fs-2x mb-3">${getCurrentDateString(date)}</span>
                     <div class="fs-4 text-white">

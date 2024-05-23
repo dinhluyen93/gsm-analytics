@@ -23,66 +23,66 @@
 	
 	<url>
 		<loc>https://example.com/gsm-analytics/about/</loc>
-		<lastmod>2024-05-22</lastmod>
+		<lastmod>2024-05-23</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://example.com/gsm-analytics/account/settings/</loc>
-		<lastmod>2024-05-22</lastmod>
+		<lastmod>2024-05-23</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://example.com/gsm-analytics/blog/</loc>
-		<lastmod>2024-05-22</lastmod>
+		<lastmod>2024-05-23</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://example.com/gsm-analytics/dashboard/</loc>
-		<lastmod>2024-05-22</lastmod>
+		<lastmod>2024-05-23</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://example.com/gsm-analytics/index-test/</loc>
-		<lastmod>2024-05-22</lastmod>
+		<lastmod>2024-05-23</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://example.com/gsm-analytics/</loc>
-		<lastmod>2024-05-22</lastmod>
+		<lastmod>2024-05-23</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://example.com/gsm-analytics/tags/</loc>
-		<lastmod>2024-05-22</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://example.com/gsm-analytics/tags/number-2/</loc>
-		<lastmod>2024-05-22</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://example.com/gsm-analytics/tags/second-tag/</loc>
-		<lastmod>2024-05-22</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://example.com/gsm-analytics/tags/posts-with-two-tags/</loc>
-		<lastmod>2024-05-22</lastmod>
+		<lastmod>2024-05-23</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://example.com/gsm-analytics/tags/another-tag/</loc>
-		<lastmod>2024-05-22</lastmod>
+		<lastmod>2024-05-23</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/gsm-analytics/tags/number-2/</loc>
+		<lastmod>2024-05-23</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/gsm-analytics/tags/second-tag/</loc>
+		<lastmod>2024-05-23</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/gsm-analytics/tags/posts-with-two-tags/</loc>
+		<lastmod>2024-05-23</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://example.com/gsm-analytics/test/</loc>
-		<lastmod>2024-05-22</lastmod>
+		<lastmod>2024-05-23</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://example.com/gsm-analytics/trips/</loc>
-		<lastmod>2024-05-22</lastmod>
+		<lastmod>2024-05-23</lastmod>
 	</url>
 </urlset>

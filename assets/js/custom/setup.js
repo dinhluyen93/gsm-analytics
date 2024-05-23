@@ -477,7 +477,7 @@ function getDailyAnalytics(dayData){
             // Tổng chuyến xe trong ngày
             result.trips.total += 1;
 
-            // Tổng doanh số trong ngày
+            // Tổng Thu Nhập Ròng trong ngày
             result.earning += (tripPrice - 1000) * 0.73;
 
             // Tổng số km trong ngày

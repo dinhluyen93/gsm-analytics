@@ -227,7 +227,7 @@ function card_daily_statistics(){
         let currentDate = new Date();
 
         function renderStatistics(date) {
-            let itemTitles = ['Doanh Số', 'Trực Tuyến', 'Chuyến Xe', 'Điểm Thưởng'];
+            let itemTitles = ['Thu Nhập Ròng', 'Trực Tuyến', 'Chuyến Xe', 'Điểm Thưởng'];
             let itemValues = [0, '0:00', 0, 0];
             let itemTargets = [400000, 480, 18, 32.85714285714286];
             let itemTargetsPercent = [0, 0, 0, 0];
@@ -431,7 +431,7 @@ function card_daily_chart_bar(elementId, currentDate) {
                             data: dataChart
                         },
                         {
-                            name: "Doanh Số",
+                            name: "Thu Nhập Ròng",
                             type: 'column',
                             data: dataChartSales
                         },
@@ -640,7 +640,7 @@ var KTChartsWidget3 = function() {
               , i = {
                 series: [
                     {
-                        name: "Doanh Số",
+                        name: "Thu Nhập Ròng",
                         data: series_data
                     }
                 ],

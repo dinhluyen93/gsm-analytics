@@ -1,0 +1,201 @@
+---
+layout: layouts/dashboard.njk
+title: Dashboard
+---
+<!--begin::Content -->
+<div id="kt_app_content" class="app-content flex-column-fluid">
+    <div id="kt_app_content_container" class="app-container container-fluid">
+        <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6 mb-5 mb-xl-10">
+            <i class="ki-duotone ki-information fs-2tx text-primary me-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>        
+            <div class="d-flex flex-stack flex-grow-1 ">
+                <div class=" fw-semibold">
+                    <h4 class="text-gray-900 fw-bold">Tính năng mới</h4>
+                    <div class="fs-6 text-gray-700 ">Bạn có thể thêm dữ liệu từ 2 tệp trước đó, dữ liệu sẽ được gộp lại thành dữ liệu duy nhất.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card mb-5 mb-xl-10">
+                    <div class="card-header border-0 cursor-pointer">
+                        <div class="card-title m-0">
+                            <h3 class="fw-bold m-0">Ghi Chép Về Pin</h3>
+                        </div>
+                    </div>
+                    <form id="battery_log_form">
+                        <div class="card-body border-top p-9">
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="fv-row mb-7 fv-plugins-icon-container">
+                                        <label for="start_km" class="required fs-6 fw-semibold mb-2">Km bắt đầu:</label>
+                                        <input type="number" id="start_km" name="start_km" class="form-control form-control-solid" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="fv-row mb-7 fv-plugins-icon-container">
+                                        <label for="start_battery" class="required fs-6 fw-semibold mb-2">Pin bắt đầu:</label>
+                                        <input type="number" id="start_battery" name="start_battery" value="100" min="0" max="100" class="form-control form-control-solid" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="fv-row mb-7 fv-plugins-icon-container">
+                                        <label for="end_km" class="required fs-6 fw-semibold mb-2">Km kết thúc:</label>
+                                        <input type="number" id="end_km" name="end_km" class="form-control form-control-solid" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="fv-row mb-7 fv-plugins-icon-container">
+                                        <label for="end_battery" class="required fs-6 fw-semibold mb-2">Pin kết thúc:</label>
+                                        <input type="number" id="end_battery" name="end_battery" value="20" min="0" max="100" class="form-control form-control-solid" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-end py-6 px-9">
+                            <button type="reset" class="btn btn-light btn-active-light-primary me-2">Tạo Lại</button>
+                            <button type="submit" class="btn btn-primary">Ghi Chú</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <!--begin::Selection-->
+                <div class="card mb-5 mb-xl-10">
+                    <!--begin::Card Header-->
+                    <div class="card-header border-0 pt-6">
+                        <div class="card-title">
+                            <div class="d-flex align-items-center position-relative my-1">
+                                <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span class="path2"></span></i>
+                                <input type="text" data-battery-log-table-filter="search" class="form-control form-control-solid w-200px ps-13" placeholder="Tìm...">
+                            </div>
+                        </div>
+                        <div class="card-toolbar">
+                            <div class="d-flex justify-content-end" data-battery-log-table-toolbar="base">
+                                <button type="button" class="btn btn-light-primary me-3">
+                                    <i class="ki-duotone ki-exit-up fs-2"><span class="path1"></span><span class="path2"></span></i>Nhập
+                                </button>
+                                <button type="button" class="btn btn-light-primary">
+                                    <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>Lưu
+                                </button>
+                            </div>
+                            <div class="d-flex justify-content-end align-items-center d-none" data-battery-log-table-toolbar="selected">
+                                <div class="fw-bold me-5">
+                                    <span class="me-2" data-battery-log-table-select="selected_count"></span> Đã Chọn
+                                </div>
+                                <button type="button" class="btn btn-danger" data-battery-log-table-select="delete_selected">Xóa Lựa Chọn</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--begin::Card Body-->
+                    <div class="card-body pt-0">
+                        <div id="battery_log_table_wrapper">
+                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="battery_log_table">
+                                <thead>
+                                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                        <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1">
+                                            <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                                <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#battery_log_table .form-check-input" value="1">
+                                            </div>
+                                        </th>
+                                        <th class="min-w-125px sorting" tabindex="0" aria-controls="battery_log_table" rowspan="1" colspan="1">Thời Gian</th>
+                                        <th class="min-w-125px sorting" tabindex="0" aria-controls="battery_log_table" rowspan="1" colspan="1">Km Bắt Đầu</th>
+                                        <th class="min-w-125px sorting" tabindex="0" aria-controls="battery_log_table" rowspan="1" colspan="1">Km Kết Thúc</th>
+                                        <th class="min-w-125px sorting" tabindex="0" aria-controls="battery_log_table" rowspan="1" colspan="1">Pin Bắt Đầu</th>
+                                        <th class="min-w-125px sorting" tabindex="0" aria-controls="battery_log_table" rowspan="1" colspan="1">Pin Kết Thúc</th>
+                                        <th class="text-end min-w-125px sorting_disabled" rowspan="1" colspan="1">Hành Động</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="fw-semibold text-gray-600" id="battery_log_tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--begin::Modal-->
+        <div class="modal fade" id="trips_import_modal" tabindex="-1" aria-modal="true">
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <div class="modal-content">
+                    <form class="form form-group" id="formAddDataFile">
+                        <div class="modal-header">
+                            <h2 class="fw-bold">Tải Tệp Tin</h2>
+                            <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+                                <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>                    
+                            </div>
+                        </div>
+                        <div class="modal-body pt-10 pb-15 px-lg-17">
+                            <div class="mb-5">
+                                <input type="file" id="formFileInput" class="form-control form-control-solid" accept="application/json">
+                            </div>
+                            <div class="mb-5">
+                                <button type="submit" id="formFileSubmit" class="btn btn-primary" data-bs-dismiss="modal">Nhập Dữ Liệu</button>
+                            </div>
+                            <div><span class="form-text fs-6 text-muted">Định dạng dữ liệu có thể bị sửa đổi theo phiên bản. Bạn cần định dạng lại tại đây.</span></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--begin::Modal-->
+        <div class="modal fade" id="trips_export_modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="fw-bold">Xuất Dữ Liệu Chuyến Xe</h2>
+                        <div id="dl_trips_export_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>                
+                        </div>
+                    </div>
+                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                        <form id="dl_trips_export_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
+                            <div class="fv-row mb-10">
+                                <label class="fs-5 fw-semibold form-label mb-5">Định Dạng:</label>
+                                <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-hide-search="true">
+                                    <option></option>
+                                    <option value="json" selected>Json</option>
+                                </select>
+                            </div>
+                            <div class="row fv-row mb-15">
+                                <label class="fs-5 fw-semibold form-label mb-5">Dữ Liệu:</label>
+                                <div class="d-flex flex-column">
+                                    <label class="form-check form-check-custom form-check-sm form-check-solid mb-3">
+                                    <input class="form-check-input" type="checkbox" value="1" checked="checked" name="file_type">
+                                    <span class="form-check-label text-gray-600 fw-semibold">
+                                    Tất Cả
+                                    </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="reset" id="dl_trips_export_cancel" class="btn btn-light me-3">
+                                Hủy Bỏ
+                                </button>
+                                <button type="submit" id="dl_trips_export_submit" class="btn btn-primary">
+                                <span class="indicator-label">
+                                Hoàn Thành
+                                </span>
+                                <span class="indicator-progress">
+                                Chờ chút... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--begin::Toast-->
+        <div id="toast_stack_container" class="toast-container position-fixed top-0 end-0 p-3 z-index-3">
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-toast="stack">
+                <div class="toast-body">
+                    Đã cập nhập dữ liệu!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

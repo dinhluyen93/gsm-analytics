@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {% if page.url == '/trips/' %}here show{% endif %}">
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {% if page.url == '/trips/' or page.url == '/trips/add-trip/'%}here show{% endif %}">
             <span class="menu-link">
                 <span class="menu-icon">
                 <i class="ki-duotone ki-delivery fs-1">
@@ -39,11 +39,16 @@
             </span>
             <div class="menu-sub menu-sub-accordion">
                 <div  class="menu-item">
-                    <a class="menu-link {% if page.url == '/trips/' %}active{% endif %}" href="{{ '/trips/' }}"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Lịch Sử</span></a>
+                    <a class="menu-link {% if page.url == '/trips/' %}active{% endif %}" href="#"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Tổng Quan</span></a>
+                </div>
+            </div>
+            <div class="menu-sub menu-sub-accordion">
+                <div  class="menu-item">
+                    <a class="menu-link {% if page.url == '/trips/add-trip/' %}active{% endif %}" href="{{ '/trips/add-trip/' }}"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Thêm Chuyến</span></a>
                 </div>
             </div>
         </div>
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {% if page.url == '/pin/' %}here show{% endif %}">
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {% if page.url == '/pin/' or page.url == '/pin/pin-notes/' %}here show{% endif %}">
             <span class="menu-link">
             <span class="menu-icon">
             <i class="ki-duotone ki-flash-circle fs-1">
@@ -60,7 +65,7 @@
             </div>
             <div class="menu-sub menu-sub-accordion">
                 <div  class="menu-item">
-                    <a class="menu-link {% if page.url == '/pin/' %}active{% endif %}" href="#"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Lịch Sử</span></a>
+                    <a class="menu-link {% if page.url == '/pin/pin-notes/' %}active{% endif %}" href="{{ '/pin/pin-notes/' }}"><span  class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Ghi Chép</span></a>
                 </div>
             </div>
         </div>
@@ -108,8 +113,8 @@
         class="app-sidebar-project-default app-sidebar-project-minimize text-center min-h-lg-400px flex-column-auto d-flex flex-column justify-content-end" 
         id="kt_app_sidebar_footer"
         >
-        <h2 class="fw-bold text-gray-800">GSM Pro</h2>
-        <div class="fw-semibold text-gray-700 fs-7 lh-2 px-7 mb-1">1 ly trà đá cho đam mê</div>
+        <h2 class="fw-bold text-gray-800">QR Donate</h2>
         <img class="mx-auto h-150px h-lg-175px mb-10" src="{{ '/assets/media/misc/donate.jpg' }}" alt=""/>
+        <div class="fw-semibold text-gray-700 fs-7 lh-2 px-7 mb-1">Mua giùm tôi 1 ly trà đá</div>
     </div>
 </div>

@@ -254,7 +254,7 @@ var BatteryLogTable = function() {
                     return;
                 }
 
-                if (parseFloat(endBattery.value) >= parseFloat(endBattery.value)) {
+                if (parseFloat(endBattery.value) >= parseFloat(startBattery.value)) {
                     Swal.fire({
                         icon: 'error',
                         buttonsStyling: false,

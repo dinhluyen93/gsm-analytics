@@ -210,7 +210,8 @@ function sortTrips(trips) {
         day.t.sort((a, b) => {
         const timeA = a[0].split(':').map(Number);
         const timeB = b[0].split(':').map(Number);
-        return timeA[0] - timeB[0] || timeA[1] - timeB[1];
+        // return timeA[0] - timeB[0] || timeA[1] - timeB[1];
+        return timeB[0] - timeA[0] || timeB[1] - timeA[1];
         });
     });
     // Sắp xếp các đối tượng theo ngày tăng dần

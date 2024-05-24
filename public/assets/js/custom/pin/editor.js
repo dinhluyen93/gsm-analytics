@@ -116,23 +116,28 @@ var BatteryLogTable = function() {
         document.querySelectorAll('[data-battery-log-table-filter="edit_row"]').forEach(function(button) {
             button.addEventListener("click", function(event) {
                 event.preventDefault();
-                var rowId = button.getAttribute('data-id');
-                fillFormWithRowData(rowId);
+                var row = event.target.closest("tr");
+                fillFormWithRowData(row);
+                dataTable.row($(row)).remove().draw();
+                removeRowDataFromLocalStorage(row);
             });
         });
     }
 
     // Hàm điền các giá trị của hàng vào form chỉnh sửa
-    function fillFormWithRowData(rowId) {
-        let batteryData = loadDataFromLocalStorage('batteryData')
-        if (batteryData && Array.isArray(batteryData)) {
-            let row = batteryData[rowId];
-            if (row) {
-                document.getElementById('start_km').value = row.startKm;
-                document.getElementById('start_battery').value = row.startBattery;
-                document.getElementById('end_km').value = row.endKm;
-                document.getElementById('end_battery').value = row.endBattery;
-            }
+    function fillFormWithRowData(row) {
+        if (row) {
+            var cells = row.querySelectorAll("td");
+            var date = cells[1].innerText;
+            var startKm = cells[2].innerText.replace('km', '');
+            var endKm = cells[3].innerText.replace('km', '');
+            var startBattery = cells[4].innerText.replace('%', '');
+            var endBattery = cells[5].innerText.replace('%', '');
+
+            document.getElementById('start_km').value = startKm;
+            document.getElementById('start_battery').value = startBattery;
+            document.getElementById('end_km').value = endKm;
+            document.getElementById('end_battery').value = endBattery;
         }
     }
 

@@ -134,6 +134,7 @@ var BatteryLogTable = function() {
             var startBattery = cells[4].innerText.replace('%', '');
             var endBattery = cells[5].innerText.replace('%', '');
 
+            document.getElementById('date').value = date;
             document.getElementById('start_km').value = startKm;
             document.getElementById('start_battery').value = startBattery;
             document.getElementById('end_km').value = endKm;
@@ -229,6 +230,7 @@ var BatteryLogTable = function() {
             });
 
             var form = document.getElementById('battery_log_form');
+            var date = document.getElementById('date');
             var startKm = document.getElementById('start_km');
             var startBattery = document.getElementById('start_battery');
             var endKm = document.getElementById('end_km');
@@ -238,13 +240,12 @@ var BatteryLogTable = function() {
                 event.preventDefault();
             
                 var batteryEntry = {
-                    date: getCurrentDate(),
+                    date: date.value,
                     startKm: startKm.value,
                     startBattery: startBattery.value,
                     endKm: endKm.value,
                     endBattery: endBattery.value
                 };
-
 
                 if (parseFloat(startKm.value) >= parseFloat(endKm.value)) {
                     Swal.fire({
@@ -294,11 +295,12 @@ var BatteryLogTable = function() {
                     });
                 }
                 
-            
+                date.value = getCurrentDate();
             });
 
-            startKm.value = parseFloat(lastKm)
-            endKm.value = parseFloat(lastKm) + 1
+            date.value = getCurrentDate();
+            startKm.value = parseFloat(lastKm);
+            endKm.value = parseFloat(lastKm) + 1;
 
             startKm.addEventListener('input', function() {
                 if (parseFloat(startKm.value) >= parseFloat(endKm.value)) {

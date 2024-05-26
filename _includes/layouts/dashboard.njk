@@ -23,6 +23,15 @@
     </script>
 </head>
 <body id="kt_app_body" data-kt-app-header-fixed="true" data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" data-kt-app-aside-enabled="true" data-kt-app-aside-fixed="true" data-kt-app-aside-push-toolbar="true" data-kt-app-aside-push-footer="true"  class="app-default" >
+    <div class="page-loader flex-column">
+        <img alt="Logo" class="theme-light-show h-30px max-h-50px" src="{{ '/assets/media/logos/logo-default.svg' }}"/>
+        <img alt="Logo" class="theme-dark-show h-30px max-h-50px" src="{{ '/assets/media/logos/logo-default.svg' }}"/>
+
+        <div class="d-flex align-items-center mt-5">
+            <span class="spinner-border text-primary" role="status"></span>
+            <span class="text-muted fs-6 fw-semibold ms-5">Loading...</span>
+        </div>
+    </div>
     <script>
         var defaultThemeMode = "light";
         var themeMode;
@@ -107,27 +116,11 @@
     {% endif %}
 
     <script>
-        const loadingEl = document.createElement("div");
-        document.body.prepend(loadingEl);
-        loadingEl.classList.add("page-loader");
-        loadingEl.classList.add("flex-column");
-        loadingEl.innerHTML = `
-        <img alt="Logo" class="theme-light-show h-30px max-h-50px" src="/assets/media/logos/logo-default.svg"/>
-		<img alt="Logo" class="theme-dark-show h-30px max-h-50px" src="/assets/media/logos/logo-default.svg"/>
-
-		<div class="d-flex align-items-center mt-5">
-			<span class="spinner-border text-primary" role="status"></span>
-			<span class="text-muted fs-6 fw-semibold ms-5">Loading...</span>
-		</div>
-        `;
-
         // Show page loading
         KTApp.showPageLoading();
-
         // Hide after 3 seconds
         setTimeout(function() {
             KTApp.hidePageLoading();
-            loadingEl.remove();
         }, 3000);
     </script>
 </body>

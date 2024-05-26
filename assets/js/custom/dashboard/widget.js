@@ -354,7 +354,7 @@ function card_daily_chart_bar(elementId, currentDate) {
         </div>
         `
         content += `
-        <div class="card-body d-flex align-items-end">
+        <div class="card-body d-flex align-items-end px-0 pb-0">
             <div id="card_daily_chart" class="w-100" style="height: 300px"></div>
         </div>
         `
@@ -426,12 +426,12 @@ function card_daily_chart_bar(elementId, currentDate) {
                     },
                     series: [
                         {
-                            name: 'Thu Nhập',
+                            name: 'Thu Tiền',
                             type: 'column',
                             data: dataChart
                         },
                         {
-                            name: "Thu Nhập Ròng",
+                            name: "Kiếm Được",
                             type: 'column',
                             data: dataChartSales
                         },
@@ -449,6 +449,9 @@ function card_daily_chart_bar(elementId, currentDate) {
                             style: {
                                 colors: a,
                                 fontSize: "12px"
+                            },
+                            formatter: function (e) {
+                                return e
                             }
                         },
                         crosshairs: {
@@ -456,9 +459,9 @@ function card_daily_chart_bar(elementId, currentDate) {
                         }
                     },
                     yaxis: {
-                        tickAmount: 4,
+                        tickAmount: 3,
                         labels: {
-                            show: true,
+                            show: false,
                             style: {
                                 colors: a,
                                 fontSize: "12px"
@@ -513,14 +516,17 @@ function card_daily_chart_bar(elementId, currentDate) {
                         },
                         y: {
                             show: false,
+                        },
+                        x: {
+                            formatter: function (e) {
+                                return e + ' giờ'
+                            }
                         }
                     },
                     grid: {
                         padding: {
                             left: 0,
                             right: 0,
-                            top: 0, // Thêm dòng này để xóa padding trên
-                            bottom: 0 // Thêm dòng này để xóa padding dưới
                         },
                         borderColor: l,
                         strokeDashArray: 4,
@@ -540,7 +546,7 @@ function card_daily_chart_bar(elementId, currentDate) {
         
 
     }
-  }
+}
 
 
 // Sự kiện khi thay đổi khung thời gian tuần
@@ -757,6 +763,10 @@ var KTChartsWidget3 = function() {
                 },
                 colors: [KTUtil.getCssVariableValue("--bs-success")],
                 grid: {
+                    padding: {
+                        left: 0,
+                        right: 0,
+                    },
                     borderColor: r,
                     strokeDashArray: 4,
                     yaxis: {

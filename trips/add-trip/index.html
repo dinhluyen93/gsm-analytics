@@ -50,7 +50,7 @@
                 themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
             }
             document.documentElement.setAttribute("data-bs-theme", themeMode);
-        }            
+        }
     </script>
     <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
         <div class="app-page  flex-column flex-column-fluid" id="kt_app_page">
@@ -1248,5 +1248,30 @@
             <script src="/gsm-analytics/assets/js/custom/trips/trips-export.js"></script>
         
     
+
+    <script>
+        const loadingEl = document.createElement("div");
+        document.body.prepend(loadingEl);
+        loadingEl.classList.add("page-loader");
+        loadingEl.classList.add("flex-column");
+        loadingEl.innerHTML = `
+        <img alt="Logo" class="theme-light-show h-30px max-h-50px" src="/assets/media/logos/logo-default.svg"/>
+		<img alt="Logo" class="theme-dark-show h-30px max-h-50px" src="/assets/media/logos/logo-default.svg"/>
+
+		<div class="d-flex align-items-center mt-5">
+			<span class="spinner-border text-primary" role="status"></span>
+			<span class="text-muted fs-6 fw-semibold ms-5">Loading...</span>
+		</div>
+        `;
+
+        // Show page loading
+        KTApp.showPageLoading();
+
+        // Hide after 3 seconds
+        setTimeout(function() {
+            KTApp.hidePageLoading();
+            loadingEl.remove();
+        }, 3000);
+    </script>
 </body>
 </html>

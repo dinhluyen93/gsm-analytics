@@ -516,11 +516,6 @@ function card_daily_chart_bar(elementId, currentDate) {
                         },
                         y: {
                             show: false,
-                        },
-                        x: {
-                            formatter: function (e) {
-                                return e + ' giờ'
-                            }
                         }
                     },
                     grid: {

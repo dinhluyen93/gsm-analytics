@@ -1,0 +1,27 @@
+
+
+    {% set scripts = {
+        'dashboard': [
+            '/assets/js/custom/dashboard/widget.js'
+        ],
+        'pin-notes': [
+            '/assets/plugins/custom/datatables/datatables.bundle.js',
+            '/assets/js/custom/pin/editor.js'
+        ],
+        'add-trip': [
+            '/assets/plugins/custom/datatables/datatables.bundle.js',
+            '/assets/js/custom/trips/editor.js',
+            '/assets/js/custom/trips/trips-export.js'
+        ],
+        'settings': [
+            '/assets/js/custom/account/settings/profile-details.js',
+            '/assets/js/custom/account/settings/user-overview.js',
+            '/assets/js/custom/account/settings/clean-data.js'
+        ]
+    } %}
+
+    {% if scripts[page.fileSlug] %}
+        {% for script in scripts[page.fileSlug] %}
+            <script src="{{ script }}"></script>
+        {% endfor %}
+    {% endif %}

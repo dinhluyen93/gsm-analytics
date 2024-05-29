@@ -69,12 +69,12 @@ var KTTripsList = function() {
     }
 
     function sortTrips(trips) {
-        // Sắp xếp các chuyến xe trong mỗi đối tượng theo thời gian tăng dần
+        // Sắp xếp các chuyến xe trong mỗi đối tượng theo thời gian giảm dần
         trips.forEach(day => {
             day.t.sort((a, b) => {
             const timeA = a[0].split(':').map(Number);
             const timeB = b[0].split(':').map(Number);
-            return timeA[0] - timeB[0] || timeA[1] - timeB[1];
+            return timeB[0] - timeA[0] || timeB[1] - timeA[1];
             });
         });
         // Sắp xếp các đối tượng theo ngày tăng dần

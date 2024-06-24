@@ -203,6 +203,19 @@ function widget_week_bonus_day_chart(startDate, endDate, dataAnalytics){
         let weekly_point_missing = document.getElementById('weekly_point_missing');
         let weekly_point_percent = document.getElementById('weekly_point_percent');
         let weekly_point_progress = document.getElementById('weekly_point_progress');
+
+
+        let dataUserBonus = getConfigs(dataUser, dataBonus)
+        console.log(dataUserBonus)
+        let maxPeakHourReward = dataUserBonus.weekReward.peakHours.trips.at(-1)
+        let maxPointReward = dataUserBonus.weekReward.points.at(-1)
+
+
+
+        let _weekly_point = document.getElementById('_weekly_point');
+        let _weekly_peak_hour = document.getElementById('_weekly_peak_hour');
+        _weekly_point.innerText = dataAnalytics.points.total + "/" + maxPointReward;
+        _weekly_peak_hour.innerText = dataAnalytics.trips.peakHours + "/" + maxPeakHourReward;
     
         weekly_point_reward.innerText = formatCurrency(dataAnalytics.bonus.week.currentBonus);
         weekly_point_missing.innerText = "Thiếu " + dataAnalytics.bonus.week.missingPoint + " điểm nhận " + formatCurrency(dataAnalytics.bonus.week.nextBonus) + "₫";

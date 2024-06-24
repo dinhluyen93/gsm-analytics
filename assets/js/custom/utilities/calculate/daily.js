@@ -494,6 +494,9 @@ function getDailyAnalytics(dayData){
                     result.trips.bike += 1;
 
                     if (tripHour >= 9 && tripHour < 12) {
+                        // Chuyến xe cao điểm
+                        result.trips.peakHours += 1;
+
                         // Điểm thưởng
                         result.points.total += 1.5;
                         result.points.bike += 1.5;
@@ -513,6 +516,9 @@ function getDailyAnalytics(dayData){
                 } else {
                     // Giao hàng
                     if (tripHour >= 9 && tripHour < 12) {
+                        // Chuyến xe cao điểm
+                        result.trips.peakHours += 1;
+
                         // Điểm thưởng
                         result.points.total += 1.5;
                     } else if (tripHour >= 12) {
